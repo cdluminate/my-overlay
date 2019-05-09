@@ -17,7 +17,6 @@ DEPEND="dev-lang/python"
 RDEPEND="${DEPEND}"
 
 src_configure () {
-	set +x
 	local BLIS_FLAGS=()
 	use static-libs && \
 		BLIS_FLAGS+=( --enable-static ) || BLIS_FLAGS+=( --disable-static )
@@ -32,6 +31,7 @@ src_configure () {
 	else
 		BLIS_FLAGS+=( -t no )
 	fi
+	# This is not a autotools configure file. We don't use econf here.
 	./configure \
 		--enable-verbose-make \
 		--prefix=/usr \
