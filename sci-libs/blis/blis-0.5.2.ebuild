@@ -11,6 +11,7 @@ LICENSE="BSD-3-Clause"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="openmp pthread static-libs blas cblas doc"
+REQUIRED_USE="?? ( openmp pthread )"
 
 DEPEND="dev-lang/python"
 RDEPEND="${DEPEND}"
