@@ -7,7 +7,7 @@ DESCRIPTION="BLAS-like Library Instantiation Software Framework"
 HOMEPAGE="https://github.com/flame/blis"
 SRC_URI="https://github.com/flame/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="BSD-3-Clause"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="openmp pthread static-libs blas cblas doc 64bit-index"
@@ -30,7 +30,7 @@ src_configure () {
 	./configure \
 		--enable-verbose-make \
 		--prefix=/usr \
-		--libdir=/usr/lib64/ \
+		--libdir=/usr/$(get_libdir) \
 		$(use_enable static-libs static) \
 		$(use_enable blas) \
 		$(use_enable cblas) \
