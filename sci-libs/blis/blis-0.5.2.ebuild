@@ -18,12 +18,6 @@ RDEPEND="${DEPEND}"
 
 src_configure () {
 	local BLIS_FLAGS=()
-	use static-libs && \
-		BLIS_FLAGS+=( --enable-static ) || BLIS_FLAGS+=( --disable-static )
-	use blas && \
-		BLIS_FLAGS+=( --enable-blas ) || BLIS_FLAGS+=( --disable-blas )
-	use cblas && \
-		BLIS_FLAGS+=( --enable-cblas ) || BLIS_FLAGS+=( --disable-cblas )
 	if use openmp; then
 		BLIS_FLAGS+=( -t openmp )
 	elif use pthread; then
@@ -37,6 +31,9 @@ src_configure () {
 		--enable-verbose-make \
 		--prefix=/usr \
 		--libdir=/usr/lib64/ \
+		$(use_enable static-libs static) \
+		$(use_enable blas) \
+		$(use_enable cblas) \
 		${BLIS_FLAGS[@]} \
 		--enable-shared auto
 }
