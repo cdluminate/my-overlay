@@ -39,6 +39,6 @@ src_configure () {
 }
 
 src_install () {
-	emake DESTDIR="${D}" install
+	default
 	use doc && dodoc README.md docs/*.md
 }
