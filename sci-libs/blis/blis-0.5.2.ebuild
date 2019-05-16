@@ -9,7 +9,7 @@ SRC_URI="https://github.com/flame/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~x86 ~amd64 ~ppc64"
 IUSE="openmp pthread static-libs blas cblas doc 64bit-index"
 REQUIRED_USE="?? ( openmp pthread )"
 
@@ -18,6 +18,8 @@ RDEPEND="${DEPEND}"
 
 src_configure () {
 	local BLIS_FLAGS=()
+	local confname
+	# determine flags
 	if use openmp; then
 		BLIS_FLAGS+=( -t openmp )
 	elif use pthread; then
@@ -26,6 +28,15 @@ src_configure () {
 		BLIS_FLAGS+=( -t no )
 	fi
 	use 64bit-index && BLIS_FLAGS+=( -b 64 -i 64 )
+	# determine config name
+	case "${ARCH}" in
+		"x86" | "amd64")
+			confname=auto ;;
+		"ppc64")
+			confname=power9 ;;
+		*)
+			confname=generic ;;
+	esac
 	# This is not a autotools configure file. We don't use econf here.
 	./configure \
 		--enable-verbose-make \
@@ -35,7 +46,8 @@ src_configure () {
 		$(use_enable blas) \
 		$(use_enable cblas) \
 		${BLIS_FLAGS[@]} \
-		--enable-shared auto
+		--enable-shared \
+		$confname
 }
 
 src_install () {
