@@ -3,6 +3,7 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib64
 includedir=${prefix}/include
 
-Name: CBLAS (BLIS)
-Description: BLAS
+Name: CBLAS
+Description: CBLAS Implementation from BLIS
+Version: 0.5.2
 Libs: -L${libdir} -lcblas
