@@ -79,7 +79,7 @@ src_install () {
 		mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
 		install -Dm0644 lib/*/${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
 		ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
-		install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
+		install -Dm0644 "${FILESDIR}/cblas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
 		eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.blis" "${PN}"
 	fi
 }
