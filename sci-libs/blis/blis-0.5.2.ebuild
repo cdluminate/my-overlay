@@ -92,9 +92,9 @@ pkg_postinst() {
 		local configfile="${EROOT}"/etc/env.d/blas/$(get_libdir)/config
 		[[ -e ${configfile} ]] && rm -f ${configfile}
 		eselect blas set "${PN}"
-		elog "blas has been eselected to [${PN}]"
+		elog "Current eselect: blas -> [${current_blas}]."
 	else
-		elog "eselect:  blas -> [${current_blas}]."
+		elog "Current eselect: blas -> [${current_blas}]."
 		elog "To use blas [${PN}] implementation, you have to issue (as root):"
 		elog "\t eselect blas set ${PN}"
 	fi
@@ -105,9 +105,9 @@ pkg_postinst() {
 		local configfile="${EROOT}"/etc/env.d/cblas/$(get_libdir)/config
 		[[ -e ${configfile} ]] && rm -f ${configfile}
 		eselect cblas set "${PN}"
-		elog "cblas has been eselected to [${PN}]"
+		elog "Current eselect: cblas -> [${current_cblas}]."
 	else
-		elog "eselect:  cblas -> [${current_cblas}]."
+		elog "Current eselect: cblas -> [${current_cblas}]."
 		elog "To use cblas [${PN}] implementation, you have to issue (as root):"
 		elog "\t eselect cblas set ${PN}"
 	fi
