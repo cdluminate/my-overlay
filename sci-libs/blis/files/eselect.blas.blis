@@ -1,4 +1,4 @@
-blas/blis/libblas.so /usr/@LIBDIR@/libblas.so
-blas/blis/libblas.so.3 /usr/@LIBDIR@/libblas.so.3
-blas/blis/libblas.a /usr/@LIBDIR@/libblas.a
-../blas/blis/blas.pc /usr/@LIBDIR@/pkgconfig/blas.pc
+blas/blis/libblas.so      /usr/@LIBDIR@/libblas.so
+blas/blis/libblas.so.3    /usr/@LIBDIR@/libblas.so.3
+libblis.a                 /usr/@LIBDIR@/libblas.a
+../blas/blis/blas.pc      /usr/@LIBDIR@/pkgconfig/blas.pc

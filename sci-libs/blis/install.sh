@@ -1,2 +1,2 @@
 ebuild blis* digest
-USE='blas cblas' emerge --ask blis
+USE='blas cblas static-libs' emerge --ask blis
