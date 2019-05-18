@@ -1,0 +1,8 @@
+blas/blis/libcblas.so /usr/@LIBDIR@/libcblas.so
+blas/blis/libcblas.so.3 /usr/@LIBDIR@/libcblas.so.3
+blas/blis/libcblas.a /usr/@LIBDIR@/libcblas.a
+../blas/blis/cblas.pc /usr/@LIBDIR@/pkgconfig/cblas.pc
+../@LIBDIR@/blas/blis/cblas_test.h /usr/include/cblas_test.h
+../@LIBDIR@/blas/blis/cblas_mangling.h /usr/include/cblas_mangling.h
+../@LIBDIR@/blas/blis/cblas_f77.h /usr/include/cblas_f77.h
+../@LIBDIR@/blas/blis/cblas.h /usr/include/cblas.h

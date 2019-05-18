@@ -22,6 +22,7 @@ PATCHES=(
 )
 
 export DEB_LIBBLAS=libblas.so.3
+export DEB_LIBCBLAS=libcblas.so.3
 
 src_configure () {
 	local BLIS_FLAGS=()
@@ -59,11 +60,15 @@ src_configure () {
 
 src_install () {
 	default
+	use doc && dodoc README.md docs/*.md
+
 	mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
 	install -Dm0644 lib/*/${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
 	ln -s ${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libblas.so
 	install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
-	use doc && dodoc README.md docs/*.md
-
 	eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.blis" "${PN}"
+
+	install -Dm0644 lib/*/${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
+	ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
+	eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.blis" "${PN}"
 }

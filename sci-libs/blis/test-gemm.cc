@@ -14,7 +14,7 @@
 
 const int iteration = 5; // how many iterations would you like to run
 const int repeat = 100; // repeat several times in each iteration
-const int M = 512; // matrix size (M * M) used for testing
+const int M = 128; // matrix size (M * M) used for testing
 const bool debug = false; // dump the matrices?
 
 #define _GEMM(T) cblas_##T##gemm
