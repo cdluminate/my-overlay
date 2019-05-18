@@ -1,0 +1,12 @@
+Index: blis/Makefile
+===================================================================
+--- blis.orig/Makefile
++++ blis/Makefile
+@@ -659,6 +659,7 @@ else
+ 	@$(LINKER) $(SOFLAGS) -o $(LIBBLIS_SO_OUTPUT_NAME) $? $(LDFLAGS)
+ endif
+ endif
++	$(LINKER) $(SOFLAGS) -o $(BASE_LIB_PATH)/$(DEB_LIBBLAS) $? $(LDFLAGS) -Wl,--soname,$(DEB_LIBBLAS)
+ 
+ # Local symlink for shared library.
+ # NOTE: We use a '.loc' suffix to avoid filename collisions in case this

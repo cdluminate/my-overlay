@@ -16,7 +16,12 @@ REQUIRED_USE="?? ( openmp pthread )"
 DEPEND="dev-lang/python"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-rpath.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-rpath.patch"
+	"${FILESDIR}/${P}-blas-provider.patch"
+)
+
+export DEB_LIBBLAS=libblas.so.3
 
 src_configure () {
 	local BLIS_FLAGS=()
@@ -54,5 +59,7 @@ src_configure () {
 
 src_install () {
 	default
+	mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
+	install -Dm0644 lib/*/libblas.so.3 ${ED}/usr/$(get_libdir)/blas/blis/
 	use doc && dodoc README.md docs/*.md
 }
