@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit eutils
 
 DESCRIPTION="BLAS-like Library Instantiation Software Framework"
 HOMEPAGE="https://github.com/flame/blis"
@@ -80,5 +81,34 @@ src_install () {
 		ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
 		install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
 		eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.blis" "${PN}"
+	fi
+}
+
+pkg_postinst() {
+	# check blas
+	local current_blas=$(eselect blas show | cut -d' ' -f2)
+	if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
+		# work around eselect bug #189942
+		local configfile="${EROOT}"/etc/env.d/blas/$(get_libdir)/config
+		[[ -e ${configfile} ]] && rm -f ${configfile}
+		eselect blas set "${PN}"
+		elog "blas has been eselected to ${PN}"
+	else
+		elog "Current eselected blas is ${current_blas}"
+		elog "To use blas ${PN} implementation, you have to issue (as root):"
+		elog "\t eselect blas set ${PN}"
+	fi
+	# check cblas
+	local current_cblas=$(eselect cblas show | cut -d' ' -f2)
+	if [[ ${current_cblas} == blis || -z ${current_cblas} ]]; then
+		# work around eselect bug #189942
+		local configfile="${EROOT}"/etc/env.d/cblas/$(get_libdir)/config
+		[[ -e ${configfile} ]] && rm -f ${configfile}
+		eselect cblas set "${PN}"
+		elog "cblas has been eselected to ${PN}"
+	else
+		elog "Current eselected cblas is ${current_cblas}"
+		elog "To use blas ${PN} implementation, you have to issue (as root):"
+		elog "\t eselect cblas set ${PN}"
 	fi
 }
