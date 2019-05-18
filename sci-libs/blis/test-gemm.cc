@@ -4,7 +4,9 @@
 
 //#include <cblas.h>
 //#include <mkl.h>
-#include <blis/cblas.h>  /* MKL - CBLAS Part */
+extern "C" {
+#include <cblas.h>  /* MKL - CBLAS Part */
+};
 
 #include <sys/time.h>
 
