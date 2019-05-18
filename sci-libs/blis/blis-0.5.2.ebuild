@@ -23,6 +23,8 @@ PATCHES=(
 
 export DEB_LIBBLAS=libblas.so.3
 export DEB_LIBCBLAS=libcblas.so.3
+export LDS_BLAS="${FILESDIR}/blas.lds"
+export LDS_CBLAS="${FILESDIR}/cblas.lds"
 
 src_configure () {
 	local BLIS_FLAGS=()
