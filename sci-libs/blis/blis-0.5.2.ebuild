@@ -60,8 +60,9 @@ src_configure () {
 src_install () {
 	default
 	mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
-	install -Dm0644 lib/*/libblas.so.3 ${ED}/usr/$(get_libdir)/blas/blis/
+	install -Dm0644 lib/*/${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
+	ln -s ${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libblas.so
 	use doc && dodoc README.md docs/*.md
 
-	eselect blas add "$(get_libdir)" "${FILESDIR}"/eselect.blas.blis ${ESELECT_PROF}
+	eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.blis" "${PN}"
 }
