@@ -62,4 +62,6 @@ src_install () {
 	mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
 	install -Dm0644 lib/*/libblas.so.3 ${ED}/usr/$(get_libdir)/blas/blis/
 	use doc && dodoc README.md docs/*.md
+
+	eselect blas add "$(get_libdir)" "${FILESDIR}"/eselect.blas.blis ${ESELECT_PROF}
 }
