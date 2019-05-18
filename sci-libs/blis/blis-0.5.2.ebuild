@@ -16,6 +16,8 @@ REQUIRED_USE="?? ( openmp pthread )"
 DEPEND="dev-lang/python"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${P}-rpath.patch" )
+
 src_configure () {
 	local BLIS_FLAGS=()
 	local confname
@@ -33,7 +35,7 @@ src_configure () {
 		"x86" | "amd64")
 			confname=auto ;;
 		"ppc64")
-			confname=power9 ;;
+			confname=generic ;;
 		*)
 			confname=generic ;;
 	esac
