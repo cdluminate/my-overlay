@@ -45,7 +45,7 @@ src_configure () {
 		*)
 			confname=generic ;;
 	esac
-	# This is not a autotools configure file. We don't use econf here.
+	# This is not an autotools configure file. We don't use econf here.
 	./configure \
 		--enable-verbose-make \
 		--prefix=/usr \
@@ -62,13 +62,21 @@ src_install () {
 	default
 	use doc && dodoc README.md docs/*.md
 
-	mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
-	install -Dm0644 lib/*/${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
-	ln -s ${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libblas.so
-	install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
-	eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.blis" "${PN}"
+	# register alternative for libblas.so.3
+	if use blas; then
+		mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
+		install -Dm0644 lib/*/${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
+		ln -s ${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libblas.so
+		install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
+		eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.blis" "${PN}"
+	fi
 
-	install -Dm0644 lib/*/${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
-	ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
-	eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.blis" "${PN}"
+	# register alternative for libcblas.so.3
+	if use cblas; then
+		mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
+		install -Dm0644 lib/*/${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
+		ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
+		install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
+		eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.blis" "${PN}"
+	fi
 }
