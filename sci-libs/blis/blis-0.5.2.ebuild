@@ -14,8 +14,12 @@ KEYWORDS="~x86 ~amd64 ~ppc64"
 IUSE="openmp pthread static-libs blas cblas doc 64bit-index"
 REQUIRED_USE="?? ( openmp pthread )"
 
-DEPEND="dev-lang/python"
-RDEPEND="${DEPEND}"
+RDEPEND=(
+    "dev-lang/python"
+	"app-eselect/eselect-blas"
+	"app-eselect/eselect-cblas"
+)
+DEPEND="${RDEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${P}-rpath.patch"
