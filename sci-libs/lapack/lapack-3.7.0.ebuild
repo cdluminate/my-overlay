@@ -14,10 +14,15 @@ IUSE="cblas lapacke"
 src_configure () {
 	mkdir -p build
 	cd build
-	cmake .. -DBUILD_SHARED_LIBS=ON -DCBLAS=ON -DLAPACKE=ON
+	cmake .. -DBUILD_SHARED_LIBS=ON -DCBLAS=ON -DLAPACKE=ON -DCMAKE_INSTALL_PREFIX=/usr
 }
 
 src_compile () {
+	cd build
+	default
+}
+
+src_install () {
 	cd build
 	default
 }
