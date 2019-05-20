@@ -2,6 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+CMAKE_MAKEFILE_GENERATOR=emake
+inherit cmake-utils
+
 DESCRIPTION="BLAS,CBLAS,LAPACK,LAPACKE reference implementations"
 HOMEPAGE="http://www.netlib.org/lapack/"
 SRC_URI="http://www.netlib.org/${PN}/${P}.tgz"
@@ -11,20 +14,23 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 IUSE="cblas lapacke"
 
-src_configure () {
-	mkdir -p build
-	cd build
-	cmake .. -DBUILD_SHARED_LIBS=ON -DCBLAS=ON -DLAPACKE=ON -DCMAKE_INSTALL_PREFIX=/usr
+src_configure() {
+	local mycmakeargs=(
+		-DCBLAS=ON
+		-DLAPACKE=ON
+		-DCMAKE_INSTALL_PREFIX=/usr
+		-DBUILD_SHARED_LIBS=ON
+		-DBUILD_STATIC_LIBS=ON
+	)
+	cmake-utils_src_configure
 }
 
 src_compile () {
-	cd build
-	default
+	cmake-utils_src_compile
 }
 
 src_install () {
-	cd build
-	default
+	cmake-utils_src_install
 }
 
 #CMAKE_MAKEFILE_GENERATOR=emake
@@ -52,18 +58,6 @@ src_install () {
 #		sed -i -e 's/\.so\([\.0-9]\+\)\?/\1.dylib/g' \
 #			"${T}"/eselect.blas.reference || die
 #	fi
-#}
-#
-#src_configure() {
-#	local mycmakeargs=(
-#		-Wno-dev
-#		-DUSE_OPTIMIZED_BLAS=OFF
-#		-DCMAKE_Fortran_FLAGS="$(get_abi_CFLAGS) ${FCFLAGS}"
-#		-DBUILD_SHARED_LIBS=ON
-#		-DBUILD_STATIC_LIBS=ON
-#	)
-#
-#	cmake-utils_src_configure
 #}
 #
 #src_compile() {
