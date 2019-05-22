@@ -4,6 +4,7 @@
 EAPI=7
 CMAKE_MAKEFILE_GENERATOR=emake
 inherit cmake-utils
+#inherit eutils fortran-2 cmake-utils multilib flag-o-matic toolchain-funcs
 
 DESCRIPTION="BLAS,CBLAS,LAPACK,LAPACKE reference implementations"
 HOMEPAGE="http://www.netlib.org/lapack/"
@@ -12,7 +13,17 @@ SRC_URI="http://www.netlib.org/${PN}/${P}.tgz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
-IUSE="cblas lapacke"
+IUSE="cblas lapacke doc"
+
+RDEPEND="
+	app-eselect/eselect-blas
+	app-eselect/eselect-cblas
+	app-eselect/eselect-lapack
+	doc? ( app-doc/blas-docs )"
+DEPEND="${RDEPEND}
+	virtual/pkgconfig"
+
+#PATCHES=( "${FILESDIR}/lapack-reference-${LPV}-fix-build-system.patch" )
 
 src_configure() {
 	local mycmakeargs=(
@@ -33,20 +44,6 @@ src_install () {
 	cmake-utils_src_install
 }
 
-#CMAKE_MAKEFILE_GENERATOR=emake
-#
-#inherit eutils fortran-2 cmake-utils multilib flag-o-matic toolchain-funcs
-#
-#
-#RDEPEND="
-#	app-eselect/eselect-blas
-#	doc? ( app-doc/blas-docs )"
-#DEPEND="${RDEPEND}
-#	virtual/pkgconfig"
-#
-#S="${WORKDIR}/${LPN}-${LPV}"
-#PATCHES=( "${FILESDIR}/lapack-reference-${LPV}-fix-build-system.patch" )
-#
 #src_prepare() {
 #	cmake-utils_src_prepare
 #
@@ -58,10 +55,6 @@ src_install () {
 #		sed -i -e 's/\.so\([\.0-9]\+\)\?/\1.dylib/g' \
 #			"${T}"/eselect.blas.reference || die
 #	fi
-#}
-#
-#src_compile() {
-#	cmake-utils_src_compile -C BLAS
 #}
 #
 #src_test() {
