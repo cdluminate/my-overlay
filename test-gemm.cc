@@ -1,23 +1,15 @@
+// This file is used to test correctness of blas packaging.
+// g++ test-gemm.cc $(pkg-config --libs --cflags mkl-rt)
+// Author: M. Zhou <lumin@debian.org>
+
 #include <iostream>
 #include <cstdlib>
 #include <cassert>
-
-//#include <cblas.h>
-//#include <mkl.h>
-extern "C" {
-#include <cblas.h>  /* MKL - CBLAS Part */
-};
-
 #include <sys/time.h>
 
-// This file is used to test correctness of cblas header / library packaging.
-// Although can be used as a very rough benchmarker.
-// g++ test-gemm.cc $(pkg-config --libs --cflags mkl-rt)
-
-const int iteration = 5; // how many iterations would you like to run
-const int repeat = 100; // repeat several times in each iteration
-const int M = 128; // matrix size (M * M) used for testing
-const bool debug = false; // dump the matrices?
+#include <cblas.h>
+//#include <mkl.h>
+//#include <mkl_cblas.h>  /* MKL - CBLAS Part */
 
 #define _GEMM(T) cblas_##T##gemm
 #define _AXPY(T) cblas_##T##axpy
@@ -51,10 +43,21 @@ xdump2(const size_t m, const size_t n, const PREC_T* x, const size_t incx)
 }
 
 int
-main(void)
+main(int argc, char* argv[])
 {
-	struct timeval tv_start, tv_end;
+	int iteration = 5; // how many iterations would you like to run
+	int M = 512; // matrix size (M * M) used for testing
+	bool debug = false; // dump the matrices?
 
+	// read env variable and cmd args
+	if (getenv("M")) {
+		M = atoi(getenv("M"));
+	}
+	if (argc > 1) {
+		M = atoi(argv[1]);
+	}
+
+	struct timeval tv_start, tv_end;
 	PREC_T* x = (PREC_T*)malloc(sizeof(PREC_T) * M * M);
 	PREC_T* y = (PREC_T*)malloc(sizeof(PREC_T) * M * M);
 	PREC_T* z = (PREC_T*)malloc(sizeof(PREC_T) * M * M);
@@ -74,8 +77,12 @@ main(void)
 	AXPY(M*M, -1., x, 1, z, 1); // z <- -x + z
 	if (debug) xdump2(M, M, z, 1);
 	PREC_T error = ASUM(M*M, z, 1);
-	fprintf(stdout, "Sanity Test Error: %lf\n", (double)error);
+	if (error >= 1e-9)
+		fprintf(stdout, "Sanity Test | Error: %lf\n", (double)error);
 	assert(error < 1e-9);
+
+	printf("Matrix Size: [%d,%d], sizeof(type) [%d], Sanity Check [OK]\n",
+			M, M, sizeof(PREC_T));
 
 	// start iterations
 	for (int t = 0; t < iteration; t++) {
@@ -88,21 +95,22 @@ main(void)
 
 		// run dgemm
 		gettimeofday(&tv_start, nullptr);
-		for (int i = 0; i < repeat; i++) {
-			GEMM(CblasRowMajor, CblasNoTrans, CblasNoTrans,
-				M, M, M, 1., x, M, y, M, 0., z, M);
-			GEMM(CblasRowMajor, CblasTrans, CblasNoTrans,
-				M, M, M, 1., x, M, y, M, 0., z, M);
-			GEMM(CblasRowMajor, CblasNoTrans, CblasTrans,
-				M, M, M, 1., x, M, y, M, 0., z, M);
-			GEMM(CblasRowMajor, CblasTrans, CblasTrans,
-				M, M, M, 1., x, M, y, M, 0., z, M);
-		}
+		GEMM(CblasRowMajor, CblasNoTrans, CblasNoTrans,
+			M, M, M, 1., x, M, y, M, 0., z, M);
+		GEMM(CblasRowMajor, CblasTrans, CblasNoTrans,
+			M, M, M, 1., x, M, y, M, 0., z, M);
+		GEMM(CblasRowMajor, CblasNoTrans, CblasTrans,
+			M, M, M, 1., x, M, y, M, 0., z, M);
+		GEMM(CblasRowMajor, CblasTrans, CblasTrans,
+			M, M, M, 1., x, M, y, M, 0., z, M);
 		gettimeofday(&tv_end, nullptr);
-		fprintf(stdout, "(%d/%d) Elapsed %.3lf ms\n", t+1, repeat,
+		
+		// report mean elapsed time for 4 runs
+		fprintf(stdout, "Iter(%d/%d) Elapsed %.3lf ms\n", t+1, iteration,
 				(tv_end.tv_sec*1e6 + tv_end.tv_usec
-				 - tv_start.tv_sec*1e6  - tv_start.tv_usec)/1e3);
+				 - tv_start.tv_sec*1e6  - tv_start.tv_usec)/4e3);
 	}
+	free(x); free(y); free(z);
 
 	return 0;
 }
