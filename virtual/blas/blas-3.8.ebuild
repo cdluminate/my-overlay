@@ -9,6 +9,7 @@ KEYWORDS="~amd64 ~ppc64"
 
 RDEPEND="|| (
 		sci-libs/lapack
+		sci-libs/blis
 		>=sci-libs/mkl-9.1.023
 	)
 	!sci-libs/blas-reference
