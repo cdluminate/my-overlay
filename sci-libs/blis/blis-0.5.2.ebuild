@@ -11,15 +11,16 @@ SRC_URI="https://github.com/flame/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~ppc64"
-IUSE="openmp pthread static-libs blas cblas doc 64bit-index"
-REQUIRED_USE="?? ( openmp pthread )"
+IUSE="openmp pthread serial static-libs blas cblas doc 64bit-index"
+REQUIRED_USE="?? ( openmp pthread serial )"
 
 RDEPEND=(
-    "dev-lang/python"
 	"app-eselect/eselect-blas"
 	"!app-eselect/eselect-cblas"
 )
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	dev-lang/python
+"
 
 PATCHES=(
 	"${FILESDIR}/${P}-rpath.patch"
@@ -87,14 +88,16 @@ src_install () {
 		cat ${FILESDIR}/eselect.cblas.blis >> ${T}/eselect.blas.blis
 	fi
 
-	if use blas || use cblas; then
+	if ! use 64bit-index && use blas || use cblas; then
 		eselect blas add "$(get_libdir)" "${T}/eselect.blas.blis" "${PN}"
 	fi
 }
 
 pkg_postinst() {
-	# check blas
+	if use 64bit-index; then return; fi
 	if ! (use blas || use cblas); then return; fi
+
+	# check blas
 	local current_blas=$(eselect blas show | cut -d' ' -f2)
 	if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
 		# work around eselect bug #189942
