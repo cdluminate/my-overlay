@@ -25,23 +25,29 @@ foobar () {
 	done
 }
 
+echo '### numpy -- readelf results ###'
 foobar | grep '(NEEDED)' | sort | uniq
-foobar
+#foobar
+echo '-------------------------------------------------'
 
 export BLIS_NUM_THREADS=4
 
-LD_LIBRARY_PATH=/usr/lib64/blas/reference python3 -c "$tester"
-LD_LIBRARY_PATH=/usr/lib64/blas/reference python3 -c "$tester_svd"
-LD_LIBRARY_PATH=/usr/lib64/blas/blis      python3 -c "$tester"
-LD_LIBRARY_PATH=/usr/lib64/blas/blis      python3 -c "$tester_svd"
+echo '### numpy -- ld-library-path results ###'
+LD_LIBRARY_PATH=/usr/lib64/blas/reference:/usr/lib64/lapack/reference python3 -c "$tester"
+LD_LIBRARY_PATH=/usr/lib64/blas/reference:/usr/lib64/lapack/reference python3 -c "$tester_svd"
+LD_LIBRARY_PATH=/usr/lib64/blas/blis:/usr/lib64/lapack/reference      python3 -c "$tester"
+LD_LIBRARY_PATH=/usr/lib64/blas/blis:/usr/lib64/lapack/reference      python3 -c "$tester_svd"
+echo '-------------------------------------------------'
 
+echo '### numpy -- eselect switching results ###'
 for y in reference blis; do
 	echo '-------------------------------------------------'
-	for x in blas cblas lapack; do
+	echo 'USING'
+	for x in blas cblas; do
 		eselect $x set $y
 	done
 	for x in blas cblas lapack; do
-		eselect $x list
+		echo $x : $(eselect $x show)
 	done
 	python3 -c "$tester"
 	python3 -c "$tester_svd"
