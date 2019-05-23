@@ -11,20 +11,14 @@
 //#include <mkl.h>
 //#include <mkl_lapacke.h>  /* MKL - CBLAS Part */
 
-#define _GEMM(T) cblas_##T##gemm
-#define _AXPY(T) cblas_##T##axpy
-#define _ASUM(T) cblas_##T##asum
+#define _GESVD(T) LAPACKE_##T##gesvd
 
 #if !defined(USE_DOUBLE)
 #define PREC_T float
-#define GEMM _GEMM(s)
-#define AXPY _AXPY(s)
-#define ASUM _ASUM(s)
+#define GESVD _GESVD(s)
 #else
 #define PREC_T double
-#define GEMM _GEMM(d)
-#define AXPY _AXPY(d)
-#define ASUM _ASUM(d)
+#define GESVD _GESVD(d)
 #endif
 
 #if !defined BlasInt
@@ -66,8 +60,7 @@ main(int argc, char* argv[])
 
 		// run dgemm
 		gettimeofday(&tv_start, nullptr);
-		LAPACKE_sgesvd(
-				LAPACK_ROW_MAJOR, 'A', 'A',
+		GESVD(  LAPACK_ROW_MAJOR, 'A', 'A',
 			   	M, M, A, M, S, U, M, VT, M, superb
 				);
 		gettimeofday(&tv_end, nullptr);
