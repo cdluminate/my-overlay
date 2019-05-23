@@ -8,7 +8,7 @@ inherit cmake-utils
 
 DESCRIPTION="BLAS,CBLAS,LAPACK,LAPACKE reference implementations"
 HOMEPAGE="http://www.netlib.org/lapack/"
-SRC_URI="http://www.netlib.org/${PN}/${P}.tgz"
+SRC_URI="http://www.netlib.org/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
