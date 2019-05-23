@@ -47,8 +47,8 @@ src_install () {
 	mv -v ${ED}/usr/$(get_libdir)/libblas.so* ${ED}/usr/$(get_libdir)/blas/reference/
 	eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.reference" reference
 
-	mkdir -p ${ED}/usr/$(get_libdir)/cblas/reference/
-	mv -v ${ED}/usr/$(get_libdir)/libcblas.so* ${ED}/usr/$(get_libdir)/cblas/reference/
+	mkdir -p ${ED}/usr/$(get_libdir)/blas/reference/
+	mv -v ${ED}/usr/$(get_libdir)/libcblas.so* ${ED}/usr/$(get_libdir)/blas/reference/
 	eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.reference" reference
 
 	mkdir -p ${ED}/usr/$(get_libdir)/lapack/reference/
