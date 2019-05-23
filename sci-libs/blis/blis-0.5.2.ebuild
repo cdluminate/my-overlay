@@ -66,6 +66,10 @@ src_configure () {
 		$confname
 }
 
+src_test () {
+	emake check
+}
+
 src_install () {
 	default
 	use doc && dodoc README.md docs/*.md
