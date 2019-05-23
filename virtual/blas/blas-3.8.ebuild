@@ -5,7 +5,7 @@ EAPI="7"
 
 DESCRIPTION="Virtual for FORTRAN 77 BLAS implementation"
 SLOT="0"
-KEYWORDS="~amd64 ppc64"
+KEYWORDS="~amd64 ~ppc64"
 
 RDEPEND="|| (
 		sci-libs/lapack
