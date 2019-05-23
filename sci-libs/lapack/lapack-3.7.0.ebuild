@@ -42,6 +42,32 @@ src_compile () {
 
 src_install () {
 	cmake-utils_src_install
+
+	mkdir -p ${ED}/usr/$(get_libdir)/blas/reference/
+	mv -v ${ED}/usr/$(get_libdir)/libblas.so* ${ED}/usr/$(get_libdir)/blas/reference/
+	eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.reference" reference
+
+	mkdir -p ${ED}/usr/$(get_libdir)/cblas/reference/
+	mv -v ${ED}/usr/$(get_libdir)/libcblas.so* ${ED}/usr/$(get_libdir)/cblas/reference/
+	eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.reference" reference
+
+	mkdir -p ${ED}/usr/$(get_libdir)/lapack/reference/
+	mv -v ${ED}/usr/$(get_libdir)/liblapack.so* ${ED}/usr/$(get_libdir)/lapack/reference/
+	eselect lapack add "$(get_libdir)" "${FILESDIR}/eselect.lapack.reference" reference
+}
+
+pkg_postinst () {
+	eselect blas set reference
+	local current_blas=$(eselect blas show | cut -d' ' -f2)
+	elog "Current eselect: blas -> [${current_blas}]."
+
+	eselect cblas set reference
+	local current_cblas=$(eselect cblas show | cut -d' ' -f2)
+	elog "Current eselect: cblas -> [${current_cblas}]."
+
+	eselect lapack set reference
+	local current_lapack=$(eselect lapack show | cut -d' ' -f2)
+	elog "Current eselect: lapack -> [${current_lapack}]."
 }
 
 #src_prepare() {
