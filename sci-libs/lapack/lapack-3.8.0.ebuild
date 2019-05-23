@@ -19,6 +19,10 @@ RDEPEND="
 	app-eselect/eselect-blas
 	app-eselect/eselect-cblas
 	app-eselect/eselect-lapack
+	!sci-libs/blas-reference
+	!sci-libs/cblas-reference
+	!sci-libs/lapack-reference
+	!sci-libs/lapacke-reference
 	doc? ( app-doc/blas-docs )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
