@@ -17,7 +17,7 @@ IUSE="cblas lapacke doc"
 
 RDEPEND="
 	app-eselect/eselect-blas
-	app-eselect/eselect-cblas
+	!app-eselect/eselect-cblas
 	app-eselect/eselect-lapack
 	!sci-libs/blas-reference
 	!sci-libs/cblas-reference
@@ -50,17 +50,20 @@ src_install () {
 	mkdir -p ${ED}/usr/$(get_libdir)/blas/reference/
 	mv -v ${ED}/usr/$(get_libdir)/libblas.so* ${ED}/usr/$(get_libdir)/blas/reference/
 	mv -v ${ED}/usr/$(get_libdir)/pkgconfig/blas.pc ${ED}/usr/$(get_libdir)/blas/reference/
-	eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.reference" reference
 
 	mkdir -p ${ED}/usr/$(get_libdir)/blas/reference/
 	mv -v ${ED}/usr/$(get_libdir)/libcblas.so* ${ED}/usr/$(get_libdir)/blas/reference/
 	mv -v ${ED}/usr/$(get_libdir)/pkgconfig/cblas.pc ${ED}/usr/$(get_libdir)/blas/reference/
 	mv -v ${ED}/usr/include/cblas* ${ED}/usr/$(get_libdir)/blas/reference/
-	eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.reference" reference
+
+	cat ${FILESDIR}/eselect.blas.reference > ${T}/eselect.blas.reference
+	cat ${FILESDIR}/eselect.cblas.reference >> ${T}/eselect.blas.reference
+	eselect blas add "$(get_libdir)" "${T}/eselect.blas.reference" reference
 
 	mkdir -p ${ED}/usr/$(get_libdir)/lapack/reference/
 	mv -v ${ED}/usr/$(get_libdir)/liblapack.so* ${ED}/usr/$(get_libdir)/lapack/reference/
 	mv -v ${ED}/usr/$(get_libdir)/pkgconfig/lapack.pc ${ED}/usr/$(get_libdir)/lapack/reference/
+
 	eselect lapack add "$(get_libdir)" "${FILESDIR}/eselect.lapack.reference" reference
 }
 
@@ -68,10 +71,6 @@ pkg_postinst () {
 	eselect blas set reference
 	local current_blas=$(eselect blas show | cut -d' ' -f2)
 	elog "Current eselect: blas -> [${current_blas}]."
-
-	eselect cblas set reference
-	local current_cblas=$(eselect cblas show | cut -d' ' -f2)
-	elog "Current eselect: cblas -> [${current_cblas}]."
 
 	eselect lapack set reference
 	local current_lapack=$(eselect lapack show | cut -d' ' -f2)

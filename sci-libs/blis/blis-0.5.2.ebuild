@@ -17,7 +17,7 @@ REQUIRED_USE="?? ( openmp pthread )"
 RDEPEND=(
     "dev-lang/python"
 	"app-eselect/eselect-blas"
-	"app-eselect/eselect-cblas"
+	"!app-eselect/eselect-cblas"
 )
 DEPEND="${RDEPEND}"
 
@@ -69,27 +69,32 @@ src_install () {
 	default
 	use doc && dodoc README.md docs/*.md
 
-	# register alternative for libblas.so.3
 	if use blas; then
 		mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
 		install -Dm0644 lib/*/${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
 		ln -s ${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libblas.so
 		install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
-		eselect blas add "$(get_libdir)" "${FILESDIR}/eselect.blas.blis" "${PN}"
+
+		cat ${FILESDIR}/eselect.blas.blis > ${T}/eselect.blas.blis
 	fi
 
-	# register alternative for libcblas.so.3
 	if use cblas; then
 		mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
 		install -Dm0644 lib/*/${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
 		ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
 		install -Dm0644 "${FILESDIR}/cblas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
-		eselect cblas add "$(get_libdir)" "${FILESDIR}/eselect.cblas.blis" "${PN}"
+
+		cat ${FILESDIR}/eselect.cblas.blis >> ${T}/eselect.blas.blis
+	fi
+
+	if use blas || use cblas; then
+		eselect blas add "$(get_libdir)" "${T}/eselect.blas.blis" "${PN}"
 	fi
 }
 
 pkg_postinst() {
 	# check blas
+	if ! (use blas || use cblas); then return; fi
 	local current_blas=$(eselect blas show | cut -d' ' -f2)
 	if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
 		# work around eselect bug #189942
@@ -101,18 +106,5 @@ pkg_postinst() {
 		elog "Current eselect: blas -> [${current_blas}]."
 		elog "To use blas [${PN}] implementation, you have to issue (as root):"
 		elog "\t eselect blas set ${PN}"
-	fi
-	# check cblas
-	local current_cblas=$(eselect cblas show | cut -d' ' -f2)
-	if [[ ${current_cblas} == blis || -z ${current_cblas} ]]; then
-		# work around eselect bug #189942
-		local configfile="${EROOT}"/etc/env.d/cblas/$(get_libdir)/config
-		[[ -e ${configfile} ]] && rm -f ${configfile}
-		eselect cblas set "${PN}"
-		elog "Current eselect: cblas -> [${current_cblas}]."
-	else
-		elog "Current eselect: cblas -> [${current_cblas}]."
-		elog "To use cblas [${PN}] implementation, you have to issue (as root):"
-		elog "\t eselect cblas set ${PN}"
 	fi
 }
