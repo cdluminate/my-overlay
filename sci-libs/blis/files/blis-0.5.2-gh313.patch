@@ -1,0 +1,104 @@
+diff --git a/blastest/src/cblat2.c b/blastest/src/cblat2.c
+index 2916a36a..c269ed55 100644
+--- a/blastest/src/cblat2.c
++++ b/blastest/src/cblat2.c
+@@ -5451,7 +5451,7 @@ real sdiff_(real *x, real *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/cblat3.c b/blastest/src/cblat3.c
+index a5b870f0..fbdadbe8 100644
+--- a/blastest/src/cblat3.c
++++ b/blastest/src/cblat3.c
+@@ -5815,7 +5815,7 @@ real sdiff_(real *x, real *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/dblat2.c b/blastest/src/dblat2.c
+index 0cdc8f16..15e28e3e 100644
+--- a/blastest/src/dblat2.c
++++ b/blastest/src/dblat2.c
+@@ -5143,7 +5143,7 @@ doublereal ddiff_(doublereal *x, doublereal *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/dblat3.c b/blastest/src/dblat3.c
+index d7a85e29..3aa7a2b6 100644
+--- a/blastest/src/dblat3.c
++++ b/blastest/src/dblat3.c
+@@ -4563,7 +4563,7 @@ doublereal ddiff_(doublereal *x, doublereal *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/sblat2.c b/blastest/src/sblat2.c
+index 54d0a010..1d3c1fbc 100644
+--- a/blastest/src/sblat2.c
++++ b/blastest/src/sblat2.c
+@@ -5105,7 +5105,7 @@ real sdiff_(real *x, real *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/sblat3.c b/blastest/src/sblat3.c
+index dc5ef573..653f1e86 100644
+--- a/blastest/src/sblat3.c
++++ b/blastest/src/sblat3.c
+@@ -4538,7 +4538,7 @@ real sdiff_(real *x, real *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/zblat2.c b/blastest/src/zblat2.c
+index 030f03b8..86052677 100644
+--- a/blastest/src/zblat2.c
++++ b/blastest/src/zblat2.c
+@@ -5500,7 +5500,7 @@ doublereal ddiff_(doublereal *x, doublereal *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="
+diff --git a/blastest/src/zblat3.c b/blastest/src/zblat3.c
+index 3ff3634b..aca83a9e 100644
+--- a/blastest/src/zblat3.c
++++ b/blastest/src/zblat3.c
+@@ -5850,7 +5850,7 @@ doublereal ddiff_(doublereal *x, doublereal *y)
+ 
+ } /* chkxer_ */
+ 
+-/* Subroutine */ int xerbla_(char *srname, integer *info, ftnlen srname_len)
++/* Subroutine */ BLIS_EXPORT_BLAS int xerbla_(char *srname, integer *info, ftnlen srname_len)
+ {
+     /* Format strings */
+     static char fmt_9999[] = "(\002 ******* XERBLA WAS CALLED WITH INFO ="

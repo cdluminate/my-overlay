@@ -25,6 +25,7 @@ DEPEND="${RDEPEND}
 PATCHES=(
 	"${FILESDIR}/${P}-rpath.patch"
 	"${FILESDIR}/${P}-blas-provider.patch"
+	"${FILESDIR}/${P}-gh313.patch"
 )
 
 export DEB_LIBBLAS=libblas.so.3
