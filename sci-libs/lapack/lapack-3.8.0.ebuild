@@ -23,9 +23,10 @@ RDEPEND="
 	!sci-libs/cblas-reference
 	!sci-libs/lapack-reference
 	!sci-libs/lapacke-reference
-	doc? ( app-doc/blas-docs )"
-DEPEND="${RDEPEND}
+	doc? ( app-doc/blas-docs )
 	virtual/pkgconfig"
+DEPEND="${RDEPEND}
+	virtual/fortran"
 
 #PATCHES=( "${FILESDIR}/lapack-reference-${LPV}-fix-build-system.patch" )
 
