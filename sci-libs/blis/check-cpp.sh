@@ -6,8 +6,6 @@ LD_LIBRARY_PATH=/usr/lib64/blas/reference ./test-gemm
 LD_LIBRARY_PATH=/usr/lib64/blas/blis ./test-gemm
 
 eselect blas set reference || true
-eselect cblas set reference || true
 ./test-gemm
 eselect blas set blis || true
-eselect cblas set blis || true
 ./test-gemm
