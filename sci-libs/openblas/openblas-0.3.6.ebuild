@@ -88,6 +88,13 @@ src_install () {
 	emake install $(openblas_flags)
 }
 
+pkg_postinst () {
+	cat ${FILESDIR}/eselect.blas.openblas > ${T}/eselect.blas.openblas
+	cat ${FILESDIR}/eselect.cblas.openblas >> ${T}/eselect.blas.openblas
+	eselect blas add "$(get_libdir)" "${T}/eselect.blas.openblas" "${PN}"
+	eselect lapack add "$(get_libdir)" "${FILESDIR}/eselect.lapack.openblas" "${PN}"
+}
+
 #src_compile() {
 #	# openblas already does multi-jobs
 #	MAKEOPTS+=" -j1"
