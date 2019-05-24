@@ -29,6 +29,10 @@ openblas_flags() {
 	else
 		flags+=( USE_THREAD=0 ) # serial
 	fi
+	flags+=( PREFIX="/usr" DESTDIR="${ED}")
+	flags+=( OPENBLAS_INCLUDE_DIR='$(PREFIX)'/include/${PN} )
+	flags+=( OPENBLAS_LIBRARY_DIR='$(PREFIX)'/$(get_libdir) )
+
 	#local profname=$(numeric-int64_get_module_name)
 	#local libname="${profname//-/_}"
 	#local underscoresuffix="${libname#${PN}}"
@@ -38,7 +42,7 @@ openblas_flags() {
 	#fi
 	#[[ "${ABI}" == "x86" ]] && openblas_flags+=( BINARY=32 )
 
-	echo "${openblas_flags[@]}"
+	echo "${flags[@]}"
 }
 
 #get_openblas_abi_cflags() {
@@ -78,6 +82,10 @@ src_unpack () {
 
 src_compile () {
 	emake $(openblas_flags)
+}
+
+src_install () {
+	emake install $(openblas_flags)
 }
 
 #src_compile() {
