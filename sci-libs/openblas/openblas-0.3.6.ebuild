@@ -86,9 +86,6 @@ src_compile () {
 
 src_install () {
 	emake install $(openblas_flags)
-}
-
-pkg_postinst () {
 	cat ${FILESDIR}/eselect.blas.openblas > ${T}/eselect.blas.openblas
 	cat ${FILESDIR}/eselect.cblas.openblas >> ${T}/eselect.blas.openblas
 	eselect blas add "$(get_libdir)" "${T}/eselect.blas.openblas" "${PN}"
