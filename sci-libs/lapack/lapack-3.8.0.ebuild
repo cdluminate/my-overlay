@@ -45,15 +45,24 @@ src_compile () {
 src_install () {
 	cmake-utils_src_install
 
-	# Create private lib directory for eselect (ld.so.conf)
+	# Create private lib directory for eselect::blas (ld.so.conf)
 	mkdir -p ${ED}/usr/$(get_libdir)/blas/reference/
 	ln -s ../../libblas.so    ${ED}/usr/$(get_libdir)/blas/reference/libblas.so
 	ln -s ../../libblas.so.3  ${ED}/usr/$(get_libdir)/blas/reference/libblas.so.3
 	ln -s ../../libcblas.so   ${ED}/usr/$(get_libdir)/blas/reference/libcblas.so
 	ln -s ../../libcblas.so.3 ${ED}/usr/$(get_libdir)/blas/reference/libcblas.so.3
 
+	# Create private lib directory for eselect::lapack (ld.so.conf)
+	mkdir -p ${ED}/usr/$(get_libdir)/lapack/reference/
+	ln -s ../../liblapack.so    ${ED}/usr/$(get_libdir)/lapack/reference/liblapack.so
+	ln -s ../../liblapack.so.3  ${ED}/usr/$(get_libdir)/lapack/reference/liblapack.so.3
+
+	# Install eselect modules: blas, cblas
 	mkdir -p ${ED}/usr/share/eselect/modules/
-	install -vm0644 ${FILESDIR}/blas.eselect ${ED}/usr/share/eselect/modules/blas.eselect
+	install -vm0644 ${FILESDIR}/blas.eselect \
+		${ED}/usr/share/eselect/modules/blas.eselect
+	install -vm0644 ${FILESDIR}/lapack.eselect \
+		${ED}/usr/share/eselect/modules/lapack.eselect
 }
 
 #pkg_postinst () {
