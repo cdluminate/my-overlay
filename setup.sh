@@ -1,3 +1,7 @@
+cat >> /etc/portage/make.conf <<EOF
+GENTOO_MIRRORS="https://mirrors.tuna.tsinghua.edu.cn/gentoo"
+EOF
+
 # used for a new container
 emerge-webrsync
 emerge vim
