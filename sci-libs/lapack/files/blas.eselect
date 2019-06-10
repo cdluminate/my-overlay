@@ -1,0 +1,44 @@
+# -*-eselect-*-  vim: ft=eselect
+# Copyright 2005-2015 Gentoo Foundation
+# Distributed under the terms of the GNU GPL version 2 or later
+
+DESCRIPTION="Manage installed alternatives of BLAS shared objects"
+
+### list action
+
+describe_list() {
+	echo "List all installed version of BLAS"
+}
+
+do_list() {
+	echo blas-config list
+}
+
+### set action
+
+describe_set() {
+	echo "Activate one of the installed BLAS"
+}
+
+describe_set_parameters() {
+	echo "<target>"
+}
+
+describe_set_options() {
+	echo "target : Target name or number (from 'list' action)"
+}
+
+do_set() {
+	[[ $# -eq 1 ]] || die -q "Please specify exactly one version to activate!"
+	echo blas-config "$1"
+}
+
+### show action
+
+describe_show() {
+	echo "Print the currently active BLAS version"
+}
+
+do_show() {
+	echo blas-config show
+}
