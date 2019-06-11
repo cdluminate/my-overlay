@@ -3,7 +3,7 @@
 
 EAPI=6
 
-DESCRIPTION="BLAS module for eselect"
+DESCRIPTION="BLAS/CBLAS module for eselect"
 HOMEPAGE="https://www.gentoo.org"
 SRC_URI=""
 
@@ -13,7 +13,8 @@ KEYWORDS="alpha amd64 arm arm64 hppa ia64 ~mips ppc ppc64 s390 sparc x86 ~amd64-
 IUSE=""
 
 # Need skel.bash lib
-RDEPEND=">=app-admin/eselect-1.0.5"
+RDEPEND=( ">=app-admin/eselect-1.0.5"
+          "!app-eselect/eselect-cblas" )
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}"
