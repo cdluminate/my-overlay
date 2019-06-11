@@ -7,9 +7,8 @@ DESCRIPTION="Virtual for Linear Algebra Package FORTRAN 77 (LAPACK) implementati
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos"
 
-RDEPEND="|| (
-		sci-libs/lapack
-		>=sci-libs/mkl-10
-	)
+RDEPEND="
+	>=sci-libs/lapack-3.8.0
+	>=app-eselect/eselect-lapack-0.2
 	!sci-libs/lapack-reference
 	"

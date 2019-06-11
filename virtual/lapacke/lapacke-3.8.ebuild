@@ -13,8 +13,6 @@ KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux ~ppc64"
 IUSE="int64"
 
 RDEPEND="
-	|| (
-		sci-libs/lapack[lapacke]
-	)
+	>=sci-libs/lapack-3.8.0[lapacke]
 	"
 DEPEND=""
