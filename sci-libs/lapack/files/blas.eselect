@@ -1,12 +1,13 @@
 # -*-eselect-*-  vim: ft=eselect
 # Copyright 2019 Gentoo Foundation
 # Distributed under the terms of the GNU GPL version 2 or later
+# TODO: override skel::do_add
 
 inherit config tests multilib skel
 
 DESCRIPTION="Manage installed alternatives of BLAS shared objects"
 MAINTAINER="lumin@debian.org"
-VERSION="20190610"
+VERSION="20190611"
 MODULE="BLAS/CBLAS"
 
 ES_BLAS_ENVD="/etc/env.d/blas/config"
@@ -27,12 +28,15 @@ do_show() {
 	# do_show -- show both lib64 and lib32 selection
 	# do_show libxx -- show libxx selection
 	local libdir cur libdirs=( $(list_libdirs) )
+
+	# if manually specified libdirs
 	if [[ ! $# -eq 0 ]]; then
 		for libdir in $@; do
 			has $libdir ${libdirs[@]} || die -q "invalid libdir '$libdir'!"
 		done
 		libdirs=( $@ )
 	fi
+
 	for libdir in ${libdirs[@]}; do
 		[[ ! -d /usr/$libdir ]] && continue
 		[[ ! -r ${ES_BLAS_ENVD}-${libdir} ]] && continue
@@ -43,15 +47,29 @@ do_show() {
 
 ### list action
 do_list() {
-	local i targets=( $(find_targets_in ) )
-	local cur=$(load_config $ES_BLAS_ENVD CURRENT)
+	local i cur targets
+	local libdir libdirs=( $(list_libdirs) )
 
-	write_list_start "Available BLAS/CBLAS candidates:"
-	for (( i = 0; i < ${#targets[@]}; i++ )); do
-		[[ ${targets[i]} = $cur ]] \
-		&& targets[i]=$(highlight_marker "${targets[i]}")
+	# if manually specified libdirs
+	if [[ ! $# -eq 0 ]]; then
+		for libdir in $@; do
+			has $libdir ${libdirs[@]} || die -q "invalid libdir '$libdir'!"
+		done
+		libdirs=( $@ )
+	fi
+	
+	for libdir in ${libdirs[@]}; do
+		[[ ! -d /usr/$libdir ]] || [[ -L /usr/$libdir ]] && continue
+		targets=( $(find_targets_in $libdir) )
+		cur=$(load_config ${ES_BLAS_ENVD}-${libdir} CURRENT)
+
+		write_list_start "Available BLAS/CBLAS ($libdir) candidates:"
+		for (( i = 0; i < ${#targets[@]}; i++ )); do
+			[[ ${targets[i]} = $cur ]] \
+			&& targets[i]=$(highlight_marker "${targets[i]}")
+		done
+		write_numbered_list -m "(none found)" "${targets[@]}"
 	done
-	write_numbered_list -m "(none found)" "${targets[@]}"
 }
 
 ### set action
