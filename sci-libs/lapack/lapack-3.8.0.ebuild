@@ -16,7 +16,6 @@ IUSE="lapacke doc"
 # TODO: static-libs 64bit-index
 
 RDEPEND="
-	!app-eselect/eselect-blas
 	!app-eselect/eselect-cblas
 	!app-eselect/eselect-lapack
 	!sci-libs/blas-reference
@@ -26,6 +25,7 @@ RDEPEND="
 	doc? ( app-doc/blas-docs )
 	virtual/pkgconfig"
 DEPEND="${RDEPEND}
+	>=app-eselect/eselect-blas-0.2
 	virtual/fortran"
 
 src_configure() {
@@ -56,29 +56,23 @@ src_install () {
 	mkdir -p ${ED}/usr/$(get_libdir)/lapack/reference/
 	ln -s ../../liblapack.so    ${ED}/usr/$(get_libdir)/lapack/reference/liblapack.so
 	ln -s ../../liblapack.so.3  ${ED}/usr/$(get_libdir)/lapack/reference/liblapack.so.3
-
-	# Install eselect modules: blas, cblas
-	mkdir -p ${ED}/usr/share/eselect/modules/
-	install -vm0644 ${FILESDIR}/blas.eselect \
-		${ED}/usr/share/eselect/modules/blas.eselect
-	install -vm0644 ${FILESDIR}/lapack.eselect \
-		${ED}/usr/share/eselect/modules/lapack.eselect
 }
 
-#pkg_postinst () {
-#	local me=reference
-#
-#	# check eselect-blas
-#	local current_blas=$(eselect blas show | cut -d' ' -f2)
-#	if [[ ${current_blas} == ${me} || -z ${current_blas} ]]; then
-#		eselect blas set ${me}
-#		elog "Current eselect: blas -> [${current_blas}]."
-#	else
-#		elog "Current eselect: blas -> [${current_blas}]."
-#		elog "To use blas [${me}] implementation, you have to issue (as root):"
-#		elog "\t eselect blas set ${me}"
-#	fi
-#
+pkg_postinst () {
+	local me=reference libdir=$(get_libdir)
+
+	# check eselect-blas
+	eselect blas add ${libdir} ${me}
+	local current_blas=$(eselect blas show ${libdir} | cut -d' ' -f2)
+	if [[ ${current_blas} == ${me} || -z ${current_blas} ]]; then
+		eselect blas set ${libdir} ${me}
+		elog "Current eselect: blas -> [${current_blas}]."
+	else
+		elog "Current eselect: blas -> [${current_blas}]."
+		elog "To use blas [${me}] implementation, you have to issue (as root):"
+		elog "\t eselect blas set ${libdir} ${me}"
+	fi
+
 #	# check eselect-lapack
 #	local current_lapack=$(eselect lapack show | cut -d' ' -f2)
 #	if [[ ${current_lapack} == ${me} || -z ${current_lapack} ]]; then
@@ -89,4 +83,4 @@ src_install () {
 #		elog "To use lapack [${me}] implementation, you have to issue (as root):"
 #		elog "\t eselect lapack set ${me}"
 #	fi
-#}
+}
