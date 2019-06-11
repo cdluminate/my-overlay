@@ -77,7 +77,7 @@ pkg_postinst () {
 	eselect lapack add ${libdir} ${EROOT}/usr/${libdir}/lapack/${me} ${me}
 	local current_lapack=$(eselect lapack show ${libdir} | cut -d' ' -f2)
 	if [[ ${current_lapack} == ${me} || -z ${current_lapack} ]]; then
-		eselect lapack set ${me}
+		eselect lapack set ${libdir} ${me}
 		elog "Current eselect: LAPACK ($libdir) -> [${current_lapack}]."
 	else
 		elog "Current eselect: LAPACK ($libdir) -> [${current_lapack}]."
