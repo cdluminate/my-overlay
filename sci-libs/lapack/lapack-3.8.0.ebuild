@@ -62,7 +62,7 @@ pkg_postinst () {
 	local me=reference libdir=$(get_libdir)
 
 	# check eselect-blas
-	eselect blas add ${libdir} ${me}
+	eselect blas add ${libdir} ${EROOT}/usr/$(get_libdir)/blas/${me} ${me}
 	local current_blas=$(eselect blas show ${libdir} | cut -d' ' -f2)
 	if [[ ${current_blas} == ${me} || -z ${current_blas} ]]; then
 		eselect blas set ${libdir} ${me}

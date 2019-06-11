@@ -102,7 +102,7 @@ do_set() {
 	echo "$libpath" >> $ldconf
 
 	# refresh cache
-	ldconfig
+	ldconfig; env-update
 }
 
 ### add action
