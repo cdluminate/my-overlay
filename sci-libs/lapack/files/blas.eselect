@@ -4,7 +4,7 @@
 
 inherit config tests multilib skel
 
-DESCRIPTION="Manage installed alternatives of BLAS shared objects"
+DESCRIPTION="Manage installed alternatives of BLAS/CBLAS shared objects"
 MAINTAINER="lumin@debian.org"
 VERSION="20190611"
 MODULE="BLAS/CBLAS"
