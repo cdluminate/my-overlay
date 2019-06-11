@@ -15,8 +15,8 @@ IUSE="openmp pthread serial static-libs blas doc 64bit-index"
 REQUIRED_USE="?? ( openmp pthread serial )"
 
 RDEPEND=(
-	"!app-eselect/eselect-blas"
 	"!app-eselect/eselect-cblas"
+	">=app-eselect/eselect-blas-0.2"
 )
 DEPEND="${RDEPEND}
 	dev-lang/python
@@ -87,20 +87,19 @@ src_install () {
 }
 
 pkg_postinst() {
+	local libdir=$(get_libdir) me="blis"
 	if use 64bit-index; then return; fi
 	if ! (use blas); then return; fi
 
 	# check blas
-	#local current_blas=$(eselect blas show)
-	#if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
-	#	# work around eselect bug #189942
-	#	local configfile="${EROOT}"/etc/env.d/blas/$(get_libdir)/config
-	#	[[ -e ${configfile} ]] && rm -f ${configfile}
-	#	eselect blas set "${PN}"
-	#	elog "Current eselect: blas -> [${current_blas}]."
-	#else
-	#	elog "Current eselect: blas -> [${current_blas}]."
-	#	elog "To use blas [${PN}] implementation, you have to issue (as root):"
-	#	elog "\t eselect blas set ${PN}"
-	#fi
+	eselect blas add ${libdir} ${me}
+	local current_blas=$(eselect blas show ${libdir})
+	if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
+		eselect blas set ${libdir} ${me}
+		elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
+	else
+		elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
+		elog "To use blas [${me}] implementation, you have to issue (as root):"
+		elog "\t eselect blas set ${libdir} ${me}"
+	fi
 }

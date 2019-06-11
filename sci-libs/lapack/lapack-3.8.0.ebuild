@@ -16,6 +16,7 @@ IUSE="lapacke doc"
 # TODO: static-libs 64bit-index
 
 RDEPEND="
+	>=app-eselect/eselect-blas-0.2
 	!app-eselect/eselect-cblas
 	!app-eselect/eselect-lapack
 	!sci-libs/blas-reference
@@ -25,7 +26,6 @@ RDEPEND="
 	doc? ( app-doc/blas-docs )
 	virtual/pkgconfig"
 DEPEND="${RDEPEND}
-	>=app-eselect/eselect-blas-0.2
 	virtual/fortran"
 
 src_configure() {
