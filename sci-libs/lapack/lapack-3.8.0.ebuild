@@ -17,8 +17,8 @@ IUSE="lapacke doc"
 
 RDEPEND="
 	>=app-eselect/eselect-blas-0.2
+	>=app-eselect/eselect-lapack-0.2
 	!app-eselect/eselect-cblas
-	!app-eselect/eselect-lapack
 	!sci-libs/blas-reference
 	!sci-libs/cblas-reference
 	!sci-libs/lapack-reference
@@ -62,25 +62,26 @@ pkg_postinst () {
 	local me=reference libdir=$(get_libdir)
 
 	# check eselect-blas
-	eselect blas add ${libdir} ${EROOT}/usr/$(get_libdir)/blas/${me} ${me}
+	eselect blas add ${libdir} ${EROOT}/usr/${libdir}/blas/${me} ${me}
 	local current_blas=$(eselect blas show ${libdir} | cut -d' ' -f2)
 	if [[ ${current_blas} == ${me} || -z ${current_blas} ]]; then
 		eselect blas set ${libdir} ${me}
-		elog "Current eselect: blas -> [${current_blas}]."
+		elog "Current eselect: BLAS ($libdir) -> [${current_blas}]."
 	else
-		elog "Current eselect: blas -> [${current_blas}]."
+		elog "Current eselect: BLAS ($libdir) -> [${current_blas}]."
 		elog "To use blas [${me}] implementation, you have to issue (as root):"
 		elog "\t eselect blas set ${libdir} ${me}"
 	fi
 
-#	# check eselect-lapack
-#	local current_lapack=$(eselect lapack show | cut -d' ' -f2)
-#	if [[ ${current_lapack} == ${me} || -z ${current_lapack} ]]; then
-#		eselect lapack set ${me}
-#		elog "Current eselect: lapack -> [${current_lapack}]."
-#	else
-#		elog "Current eselect: lapack -> [${current_lapack}]."
-#		elog "To use lapack [${me}] implementation, you have to issue (as root):"
-#		elog "\t eselect lapack set ${me}"
-#	fi
+	# check eselect-lapack
+	eselect lapack add ${libdir} ${EROOT}/usr/${libdir}/lapack/${me} ${me}
+	local current_lapack=$(eselect lapack show ${libdir} | cut -d' ' -f2)
+	if [[ ${current_lapack} == ${me} || -z ${current_lapack} ]]; then
+		eselect lapack set ${me}
+		elog "Current eselect: LAPACK ($libdir) -> [${current_lapack}]."
+	else
+		elog "Current eselect: LAPACK ($libdir) -> [${current_lapack}]."
+		elog "To use lapack [${me}] implementation, you have to issue (as root):"
+		elog "\t eselect lapack set ${libdir} ${me}"
+	fi
 }
