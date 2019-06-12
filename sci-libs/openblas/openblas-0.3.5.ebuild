@@ -53,13 +53,13 @@ src_install () {
 		mkdir -p ${ED}/usr/$(get_libdir)/blas/openblas/
 		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so.3
 		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so.3
-		ln -s libblas.so.3           ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so
-		ln -s libcblas.so.3          ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so
+		ln -s ../../libopenblas.so   ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so
+		ln -s ../../libopenblas.so   ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so
 	fi
 	if use virtual-lapack; then
 		mkdir -p ${ED}/usr/$(get_libdir)/lapack/openblas/
 		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so.3
-		ln -s liblapack.so.3         ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so
+		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so
 	fi
 }
 
