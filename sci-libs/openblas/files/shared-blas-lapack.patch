@@ -1,0 +1,31 @@
+Description: Create shared libraries lib{blas,lapack}.so.3
+ It is done so that duplicate code with libopenblas.so.0 is kept as low as
+ possible. Only the symbols from the external BLAS/LAPACK API are incorporated
+ in the shared libraries. The rest is obtained by dynamic linking against
+ libopenblas.so.0.
+Author: Sébastien Villemot <sebastien@debian.org>
+Forwarded: not-needed
+Last-Update: 2014-05-08
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/interface/Makefile
++++ b/interface/Makefile
+@@ -2157,3 +2157,18 @@ cblas_xerbla.$(SUFFIX) cblas_xerbla.$(PS
+ # OpenBLAS (unfiltered) tarball
+ delete-duplicate-lapack-objects:
+ 	cd ../lapack-netlib && rm $(SLAPACKOBJS) $(DLAPACKOBJS) $(CLAPACKOBJS) $(ZLAPACKOBJS) lsame.o xerbla.o
++
++shared-blas-lapack: libblas.so.3 liblapack.so.3
++
++# The list of prerequisite is created by comparing with NETLIB BLAS public API.
++# The symbol cblas_xerbla is missing here, but it does not seem to be provided
++# by libopenblas.so.0 either.
++libblas.so.3: $(SBLAS1OBJS) $(SBLAS2OBJS) $(SBLAS3OBJS) $(DBLAS1OBJS) $(DBLAS2OBJS) $(DBLAS3OBJS) $(CBLAS1OBJS) $(CBLAS2OBJS) $(CBLAS3OBJS) $(ZBLAS1OBJS) $(ZBLAS2OBJS) $(ZBLAS3OBJS) ../kernel/lsame.o ../kernel/scabs1.o ../kernel/dcabs1.o ../driver/others/xerbla.o
++	$(CC) $(LDFLAGS) -shared -o $@ $^ -Wl,-soname,libblas.so.3 -L.. -lopenblas $(EXTRALIB)
++
++# The prerequisites must match the symbols deleted in target delete-duplicate-lapack-objects
++liblapack.so.3: $(SLAPACKOBJS) $(DLAPACKOBJS) $(CLAPACKOBJS) $(ZLAPACKOBJS) ../kernel/lsame.o ../driver/others/xerbla.o
++	$(CC) $(LDFLAGS) -shared -o $@ $^ ../lapack-netlib/* -Wl,-soname,liblapack.so.3 -L.. -lopenblas $(EXTRALIB)
++
++clean::
++	rm -f libblas.so.3 liblapack.so.3

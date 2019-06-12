@@ -1,2 +1,0 @@
-libopenblas.so      /usr/@LIBDIR@/libblas.so
-libopenblas.so.0    /usr/@LIBDIR@/libblas.so.3
