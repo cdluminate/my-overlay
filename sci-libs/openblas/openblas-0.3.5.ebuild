@@ -19,6 +19,8 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
+PATCHES=( "${FILESDIR}/shared-blas-lapack.patch" )
+
 openblas_flags() {
 	local flags=()
 	use dynamic && \
@@ -44,6 +46,7 @@ src_unpack () {
 
 src_compile () {
 	emake $(openblas_flags)
+	emake -Cinterface shared-blas-lapack $(openblas_flags)
 }
 
 src_install () {
@@ -51,15 +54,15 @@ src_install () {
 
 	if use virtual-blas; then
 		mkdir -p ${ED}/usr/$(get_libdir)/blas/openblas/
-		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so.3
-		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so.3
-		ln -s ../../libopenblas.so   ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so
-		ln -s ../../libopenblas.so   ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so
+		install -Dm0644 interface/libblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so.3
+		ln -s libblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so
+		install -Dm0644 interface/libcblas.so.3  ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so.3
+		ln -s libcblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so
 	fi
 	if use virtual-lapack; then
 		mkdir -p ${ED}/usr/$(get_libdir)/lapack/openblas/
-		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so.3
-		ln -s ../../libopenblas.so.0 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so
+		install -Dm0644 interface/liblapack.so.3 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so.3
+		ln -s liblapack.so.3 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so
 	fi
 }
 
