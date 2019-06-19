@@ -90,7 +90,7 @@ pkg_postinst() {
 	if ! (use blas); then return; fi
 
 	# check blas
-	eselect blas add ${libdir} ${me}
+	eselect blas add ${libdir} ${EROOT}/usr/${libdir}/blas/${me} ${me}
 	local current_blas=$(eselect blas show ${libdir})
 	if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
 		eselect blas set ${libdir} ${me}
