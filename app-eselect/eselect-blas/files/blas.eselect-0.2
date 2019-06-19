@@ -44,7 +44,7 @@ do_show() {
 	fi
 
 	for libdir in ${libdirs[@]}; do
-		[[ ! -d /usr/$libdir ]] && continue
+		[[ ! -d ${EROOT}/usr/$libdir ]] && continue
 		[[ ! -r ${EROOT}/etc/env.d/blas/${libdir}/config ]] && continue
 		cur=$(load_config ${EROOT}/etc/env.d/blas/${libdir}/config CURRENT)
 		echo ${libdir}: $cur
@@ -65,7 +65,7 @@ do_list() {
 	fi
 	
 	for libdir in ${libdirs[@]}; do
-		[[ ! -d /usr/$libdir ]] || [[ -L /usr/$libdir ]] && continue
+		[[ ! -d ${EROOT}/usr/$libdir ]] || [[ -L ${EROOT}/usr/$libdir ]] && continue
 		targets=( $(find_targets_in $libdir) )
 		cur=$(load_config ${EROOT}/etc/env.d/blas/${libdir}/config CURRENT)
 
