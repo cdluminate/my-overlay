@@ -11,7 +11,7 @@ SRC_URI="https://github.com/flame/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~ppc64"
-IUSE="openmp pthread serial static-libs blas doc 64bit-index"
+IUSE="openmp pthread serial static-libs +blas doc 64bit-index"
 REQUIRED_USE="?? ( openmp pthread serial )"
 
 RDEPEND=(
@@ -27,11 +27,6 @@ PATCHES=(
 	"${FILESDIR}/${P}-blas-provider.patch"
 	"${FILESDIR}/${P}-gh313.patch"
 )
-
-export DEB_LIBBLAS=libblas.so.3
-export DEB_LIBCBLAS=libcblas.so.3
-export LDS_BLAS="${FILESDIR}/blas.lds"
-export LDS_CBLAS="${FILESDIR}/cblas.lds"
 
 src_configure () {
 	local BLIS_FLAGS=()
@@ -57,14 +52,19 @@ src_configure () {
 	# This is not an autotools configure file. We don't use econf here.
 	./configure \
 		--enable-verbose-make \
-		--prefix=/usr \
-		--libdir=/usr/$(get_libdir) \
+		--prefix=${EPREFIX}/usr \
+		--libdir=${EPREFIX}/usr/$(get_libdir) \
 		$(use_enable static-libs static) \
 		$(use_enable blas) \
 		$(use_enable blas cblas) \
 		${BLIS_FLAGS[@]} \
 		--enable-shared \
 		$confname
+}
+
+src_compile() {
+	DEB_LIBBLAS=libblas.so.3 DEB_LIBCBLAS=libcblas.so.3 LDS_BLAS="${FILESDIR}"/blas.lds LDS_CBLAS="${FILESDIR}"/cblas.lds \
+	default
 }
 
 src_test () {
@@ -76,13 +76,11 @@ src_install () {
 	use doc && dodoc README.md docs/*.md
 
 	if use blas; then
-		mkdir -p ${ED}/usr/$(get_libdir)/blas/blis/
-		install -Dm0644 lib/*/${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
-		install -Dm0644 lib/*/${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/
-		ln -s ${DEB_LIBBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libblas.so
-		ln -s ${DEB_LIBCBLAS} ${ED}/usr/$(get_libdir)/blas/blis/libcblas.so
-		install -Dm0644 "${FILESDIR}/blas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
-		install -Dm0644 "${FILESDIR}/cblas.pc" ${ED}/usr/$(get_libdir)/blas/blis/
+		dodir /usr/$(get_libdir)/blas/blis
+		insinto /usr/$(get_libdir)/blas/blis
+		doins lib/*/lib{c,}blas.so.3
+		dosym libblas.so.3 usr/$(get_libdir)/blas/blis/libblas.so
+		dosym libcblas.so.3 usr/$(get_libdir)/blas/blis/libcblas.so
 	fi
 }
 
