@@ -23,7 +23,7 @@ find_targets_in() {
 
 ### helper utility to validate a BLAS/CBLAS library directory
 validate_blaslibdir() {
-	[[ -d $1 ]] || die -q "directory '$1' doesn't exist!"
+	[[ -d $1 ]] || return 2  # dir doesn't exist
 	[[ -r "${1}/libblas.so.3" ]] && [[ -r "${1}/libblas.so" ]] \
 	&& [[ -r "${1}/libcblas.so.3" ]] && [[ -r "${1}/libcblas.so" ]] \
 	&& return 0 || return 1
@@ -75,6 +75,28 @@ do_list() {
 			&& targets[i]=$(highlight_marker "${targets[i]}")
 		done
 		write_numbered_list -m "(none found)" "${targets[@]}"
+	done
+}
+
+### validate action
+describe_validate() {
+	echo "validate eselect blas candidates"
+}
+
+do_validate() {
+	local i ldpath targets target candidate
+	local libdir libdirs=( $(list_libdirs) )
+	for libdir in ${libdirs[@]}; do
+		[[ ! -d ${EROOT}/usr/$libdir ]] || [[ -L ${EROOT}/usr/$libdir ]] && continue
+		targets=( $(find_targets_in $libdir) )
+		for target in ${targets[@]}; do
+			candidate=${EROOT}/etc/env.d/blas/${libdir}/${target}
+			ldpath=$(load_config $candidate LDPATH)
+			if ! validate_blaslibdir $ldpath; then
+				echo "Removing invalid blas candidate ($candidate) ..."
+				rm -v $candidate
+			fi
+		done
 	done
 }
 
