@@ -85,3 +85,7 @@ pkg_postinst () {
 		elog "\t eselect lapack set ${libdir} ${me}"
 	fi
 }
+
+pkg_postrm () {
+	eselect blas validate
+}
