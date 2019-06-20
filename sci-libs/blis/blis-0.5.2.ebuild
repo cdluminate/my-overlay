@@ -101,3 +101,7 @@ pkg_postinst() {
 		elog "\t eselect blas set ${libdir} ${me}"
 	fi
 }
+
+pkg_postrm() {
+	eselect blas validate
+}
