@@ -8,7 +8,7 @@ MODULE="BLAS/CBLAS"
 IFACE="blas"
 DESCRIPTION="Manage installed alternatives of $MODULE shared objects"
 MAINTAINER="lumin@debian.org"
-VERSION="20190611"
+VERSION="20190621"
 
 ### helper utility to find all available BLAS/CBLAS implementations
 find_targets_in() {
@@ -80,7 +80,7 @@ do_list() {
 
 ### validate action
 describe_validate() {
-	echo "validate eselect blas candidates"
+	echo "validate candidates and remove invalid ones"
 }
 
 do_validate() {
@@ -93,7 +93,7 @@ do_validate() {
 			candidate=${EROOT}/etc/env.d/blas/${libdir}/${target}
 			ldpath=$(load_config $candidate LDPATH)
 			if ! validate_blaslibdir $ldpath; then
-				echo "Removing invalid blas candidate ($candidate) ..."
+				echo "Removing invalid BLAS/CBLAS candidate ($candidate) ..."
 				rm -v $candidate
 			fi
 		done
@@ -101,6 +101,20 @@ do_validate() {
 }
 
 ### set action
+
+describe_set() {
+        echo "Activate one of the installed $MODULE implementations"
+}
+
+describe_set_parameters() {
+        echo "[<libdir>] <implementation>"
+}
+
+describe_set_options() {
+	echo "libdir: lib64 or lib32. Will use the native one when omitted."
+        echo "implementation : implementation name or number (from 'list' action)"
+}
+
 do_set() {
 	local libdirs=( $(list_libdirs) )
 	local targets libdir ldconf libpath impl
