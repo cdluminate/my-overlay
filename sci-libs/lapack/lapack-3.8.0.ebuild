@@ -11,7 +11,7 @@ SRC_URI="http://www.netlib.org/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris"
 IUSE="lapacke doc"
 # TODO: static-libs 64bit-index
 
@@ -88,4 +88,5 @@ pkg_postinst () {
 
 pkg_postrm () {
 	eselect blas validate
+	eselect lapack validate
 }
