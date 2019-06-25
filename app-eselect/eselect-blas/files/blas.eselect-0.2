@@ -129,6 +129,13 @@ do_set() {
 	has "$libdir" "${libdirs[@]}" || die -q "Invalid libdir ($libdir) !"
 	targets=( $(find_targets_in $libdir) )
 	has "$impl" "${targets[@]}" || die -q "Invalid impl ($impl) !"
+	if ! has "$impl" "${targets[@]}"; then
+		if [[ ${impl} -gt 0 ]] && [[ ${impl} -le ${#targets[@]} ]]; then
+			impl=${targets[(${impl} - 1)]}
+		else
+			die -q "Invalid impl ($impl) !"
+		fi
+	fi
 	# store the configuration to env.d
 	store_config ${EROOT}/etc/env.d/blas/${libdir}/config CURRENT "${impl}"
 	# generate ld.so.conf file
