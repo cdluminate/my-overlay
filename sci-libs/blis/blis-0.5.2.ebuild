@@ -63,8 +63,9 @@ src_configure () {
 }
 
 src_compile() {
-	DEB_LIBBLAS=libblas.so.3 DEB_LIBCBLAS=libcblas.so.3 LDS_BLAS="${FILESDIR}"/blas.lds LDS_CBLAS="${FILESDIR}"/cblas.lds \
-	default
+	DEB_LIBBLAS=libblas.so.3 DEB_LIBCBLAS=libcblas.so.3 \
+		LDS_BLAS="${FILESDIR}"/blas.lds LDS_CBLAS="${FILESDIR}"/cblas.lds \
+		default
 }
 
 src_test () {

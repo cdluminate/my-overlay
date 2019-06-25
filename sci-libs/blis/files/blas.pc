@@ -1,9 +1,0 @@
-prefix=/usr
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib64
-includedir=${prefix}/include
-
-Name: BLAS
-Description: BLAS Implementation from BLIS
-Version: 0.5.2
-Libs: -L${libdir} -lblas
