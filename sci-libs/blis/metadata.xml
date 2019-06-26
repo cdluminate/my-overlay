@@ -2,7 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <upstream>
-    <bugs-to>https://github.com/flame/blis/issues/<bugs-to>
+    <bugs-to>https://github.com/flame/blis/issues/</bugs-to>
     <doc>https://github.com/flame/blis</doc>
   </upstream>
   <maintainer type="project">
