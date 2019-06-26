@@ -20,4 +20,12 @@
 	application developers access to BLIS implementations via traditional BLAS
 	routine calls. An object-based API unique to BLIS is also available.
   </longdescription>
+  <use>
+	  openmp pthread serial static-libs +blas doc 64bit-index
+	  <flag name="openmp">Use openmp threadding model</flag>
+	  <flag name="pthread">Use pthread threadding model</flag>
+	  <flag name="serial">Use no threadding model</flag>
+	  <flag name="blas">Enable BLAS/CBLAS runtime switching</flag>
+	  <flag name="64bit-index">Enable 64bit array indexing, incompatible with runtime switching</flag>
+  </use>
 </pkgmetadata>
