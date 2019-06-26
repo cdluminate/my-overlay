@@ -7,3 +7,8 @@ https://github.com/gentoo/sci/issues/805
 https://github.com/gentoo/sci/issues/805#issuecomment-337274482
 https://wiki.gentoo.org/wiki/Project:Eselect/Developer_guide#Configuration_functions
 https://devmanual.gentoo.org/
+
+
+[openblas]
+https://bugs.gentoo.org/658034
+https://bugs.gentoo.org/584534
