@@ -10,7 +10,8 @@ SRC_URI="https://github.com/xianyi/OpenBLAS/tarball/v${PV} -> ${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
-IUSE="dynamic openmp pthread static-libs virtual-blas virtual-lapack"
+IUSE="dynamic openmp pthread serial static-libs eselect-ldso"
+REQUIRED_USE="?? ( openmp pthread serial )"
 
 RDEPEND="
 >=app-eselect/eselect-blas-0.2
@@ -52,25 +53,24 @@ src_compile () {
 src_install () {
 	emake install $(openblas_flags)
 
-	if use virtual-blas; then
-		mkdir -p ${ED}/usr/$(get_libdir)/blas/openblas/
+	if use eselect-ldso; then
+		dodir /usr/$(get_libdir)/blas/openblas/
 		install -Dm0644 interface/libblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so.3
-		ln -s libblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so
+		dosym libblas.so.3 usr/$(get_libdir)/blas/openblas/libblas.so
 		install -Dm0644 interface/libcblas.so.3  ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so.3
-		ln -s libcblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so
-	fi
-	if use virtual-lapack; then
-		mkdir -p ${ED}/usr/$(get_libdir)/lapack/openblas/
+		dosym libcblas.so.3 usr/$(get_libdir)/blas/openblas/libcblas.so
+
+		dodir /usr/$(get_libdir)/lapack/openblas/
 		install -Dm0644 interface/liblapack.so.3 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so.3
-		ln -s liblapack.so.3 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so
+		dosym liblapack.so.3 usr/$(get_libdir)/lapack/openblas/liblapack.so
 	fi
 }
 
 pkg_postinst () {
-	use virtual-blas && \
+	if use eselect-ldso; then
 		eselect blas add $(get_libdir) \
 			${EROOT}/usr/$(get_libdir)/blas/openblas openblas
-	use virtual-lapack && \
 		eselect lapack add $(get_libdir) \
 			${EROOT}/usr/$(get_libdir)/lapack/openblas openblas
+	fi
 }
