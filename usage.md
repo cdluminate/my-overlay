@@ -59,6 +59,12 @@ BLAS/LAPACK Runtime Switch: Developer Guide
 
 ## BLAS/LAPACK package Maintainers
 
+0. Provide extra shared objects in a private library directory, e.g.
+`/usr/lib64/blas/<foobar>/lib{,c}blas.so{,.3}`,
+`/usr/lib64/lapack/<foobar>/liblapack.so{,.3}`. These private libraries must
+have matching file names and SONAMEs. (Not mandatory for special cases such as
+MKL)
+
 1. Register an alternative with `eselect blas add ...` during postinst.
 
 2. Remove an alternative with `eselect blas validate` during postrm.
