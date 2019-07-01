@@ -1,7 +1,7 @@
 Reverse Dependency Checklist
 ============================
 
-(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending)
+(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip)
 
 [ ] armadillo
 [ ] cholmod?
@@ -25,6 +25,7 @@ Reverse Dependency Checklist
 [?] p4est-2.2
 [x] numpy-1.16.1-r1 [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
+[/] gretl-1.9.90 [FAIL, unrelated]
 
 virtual/blas
 ============
@@ -926,17 +927,3 @@ sci-mathematics/jags/jags-4.1.0.ebuild
 
 sci-mathematics/jags/jags-4.0.0.ebuild
 21:	virtual/lapack"
-
-sci-mathematics/gretl/gretl-1.9.90.ebuild
-27:	virtual/lapack
-
-sci-mathematics/gretl/gretl-1.9.14.ebuild
-27:	virtual/lapack
-
-profiles/arch/mips/use.mask
-105:# virtual/blas virtual/cblas and virtual/lapack not keyworded
-
-virtual/lapacke
-===============
-
-None
