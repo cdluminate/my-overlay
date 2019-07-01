@@ -1,7 +1,8 @@
 Reverse Dependency Checklist
 ============================
 
-(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip)
+`USE=blas lapack`
+(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip, B=blocked)
 
 [ ] armadillo
 [ ] cholmod?
@@ -16,16 +17,27 @@ Reverse Dependency Checklist
 [ ] sagemath
 [ ] scalapack
 [ ] scilab
-[-] scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
 [ ] suitesparse?
 [ ] sundials
 [ ] superlu
 [ ] umfpack
+[-] scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
+[/] Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
+[/] gretl-1.9.90 [FAIL, unrelated]
+[/] julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
+[?] app-accessibility/sphinxbase-0.8::gentoo
 [?] arpack-3.1.5
+[?] dev-lang/R-3.4.1::gentoo
+[?] jags-4.2.0
+[?] media-gfx/greycstoration-2.9-r2::gentoo
 [?] p4est-2.2
+[?] sci-biology/plink-1.07-r1::gentoo
+[?] sci-biology/vcftools-0.1.14::gentoo
+[?] sys-cluster/hpl-2.0-r3::gentoo
+[B] media-gfx/hugin/hugin-2019.0.0::gentoo
+[B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
 [x] numpy-1.16.1-r1 [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
-[/] gretl-1.9.90 [FAIL, unrelated]
 
 virtual/blas
 ============
@@ -858,72 +870,3 @@ sci-chemistry/mpqc/mpqc-2.3.1-r4.ebuild
 
 sci-astronomy/casacore/casacore-2.3.0-r1.ebuild
 25:	virtual/lapack:=
-
-sci-biology/vcftools/vcftools-0.1.14.ebuild
-19:	lapack? ( virtual/lapack )"
-
-sci-biology/plink/plink-1.07-r1.ebuild
-22:	lapack? ( virtual/lapack )"
-
-sci-biology/plink/plink-1.90_pre140514.ebuild
-23:	virtual/lapack
-
-dev-lang/R/R-3.6.0.ebuild
-35:	lapack? ( virtual/lapack:0 )
-
-dev-lang/R/R-3.5.3.ebuild
-35:	lapack? ( virtual/lapack:0 )
-
-dev-lang/R/R-3.4.1.ebuild
-34:	lapack? ( virtual/lapack:0 )
-
-sys-cluster/hpl/hpl-2.0-r3.ebuild
-19:	virtual/lapack
-
-dev-lang/julia/julia-1.1.0.ebuild
-55:	virtual/lapack"
-
-dev-lang/julia/julia-9999.ebuild
-46:	virtual/lapack"
-
-dev-lang/julia/julia-1.1.1.ebuild
-55:	virtual/lapack"
-
-app-accessibility/sphinxbase/sphinxbase-0.8.ebuild
-25:	lapack? ( virtual/lapack )
-
-sci-geosciences/grass/grass-7.4.4.ebuild
-42:	lapack? ( virtual/lapack )
-
-media-gfx/hugin/hugin-2019.0.0.ebuild
-43:	lapack? ( virtual/blas virtual/lapack )
-
-media-gfx/hugin/hugin-9999.ebuild
-45:	lapack? ( virtual/blas virtual/lapack )
-
-media-gfx/greycstoration/greycstoration-2.9-r2.ebuild
-23:	lapack? ( virtual/lapack )
-
-sci-mathematics/octave/octave-4.4.0.ebuild
-25:	virtual/lapack
-
-sci-mathematics/octave/octave-4.2.2.ebuild
-25:	virtual/lapack
-
-sci-mathematics/octave/octave-4.4.1.ebuild
-25:	virtual/lapack
-
-sci-mathematics/Macaulay2/Macaulay2-1.8.2.1-r1.ebuild
-45:	virtual/lapack
-
-sci-mathematics/jags/jags-3.4.0.ebuild
-21:	virtual/lapack"
-
-sci-mathematics/jags/jags-4.2.0.ebuild
-21:	virtual/lapack"
-
-sci-mathematics/jags/jags-4.1.0.ebuild
-21:	virtual/lapack"
-
-sci-mathematics/jags/jags-4.0.0.ebuild
-21:	virtual/lapack"
