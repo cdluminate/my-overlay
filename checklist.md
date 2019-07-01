@@ -38,6 +38,10 @@ Reverse Dependency Checklist
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
 [x] numpy-1.16.1-r1 [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
+[?] sci-astronomy/casacore-2.3.0-r1::gentoo
+[?] sci-chemistry/mpqc-2.3.1-r4::gentoo
+[?] media-libs/opencv-3.4.1-r5::gentoo
+[/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
 
 virtual/blas
 ============
@@ -840,33 +844,3 @@ sci-chemistry/freeon/freeon-1.0.10.ebuild
 
 sci-chemistry/freeon/freeon-1.0.8-r1.ebuild
 24:	virtual/lapack"
-
-sci-chemistry/gromacs/gromacs-2019.3.ebuild
-48:	lapack? ( virtual/lapack )
-
-sci-chemistry/gromacs/gromacs-2019.9999.ebuild
-48:	lapack? ( virtual/lapack )
-
-sci-chemistry/gromacs/gromacs-2018.3.ebuild
-46:	lapack? ( virtual/lapack )
-
-sci-chemistry/gromacs/gromacs-2018.7.ebuild
-46:	lapack? ( virtual/lapack )
-
-sci-chemistry/gromacs/gromacs-2018.9999.ebuild
-46:	lapack? ( virtual/lapack )
-
-sci-chemistry/gromacs/gromacs-2019.2.ebuild
-48:	lapack? ( virtual/lapack )
-
-sci-chemistry/gromacs/gromacs-9999.ebuild
-46:	lapack? ( virtual/lapack )
-
-media-libs/opencv/opencv-3.4.1-r5.ebuild
-81:	lapack? ( virtual/lapack )
-
-sci-chemistry/mpqc/mpqc-2.3.1-r4.ebuild
-19:	virtual/lapack
-
-sci-astronomy/casacore/casacore-2.3.0-r1.ebuild
-25:	virtual/lapack:=
