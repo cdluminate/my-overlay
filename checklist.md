@@ -25,23 +25,23 @@ Reverse Dependency Checklist
 [/] Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
 [/] gretl-1.9.90 [FAIL, unrelated]
 [/] julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
+[/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
 [?] app-accessibility/sphinxbase-0.8::gentoo
 [?] arpack-3.1.5
 [?] dev-lang/R-3.4.1::gentoo
 [?] jags-4.2.0
 [?] media-gfx/greycstoration-2.9-r2::gentoo
+[?] media-libs/opencv-3.4.1-r5::gentoo
 [?] p4est-2.2
+[?] sci-astronomy/casacore-2.3.0-r1::gentoo
 [?] sci-biology/plink-1.07-r1::gentoo
 [?] sci-biology/vcftools-0.1.14::gentoo
+[?] sci-chemistry/mpqc-2.3.1-r4::gentoo
 [?] sys-cluster/hpl-2.0-r3::gentoo
 [B] media-gfx/hugin/hugin-2019.0.0::gentoo
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
 [x] numpy-1.16.1-r1 [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
-[?] sci-astronomy/casacore-2.3.0-r1::gentoo
-[?] sci-chemistry/mpqc-2.3.1-r4::gentoo
-[?] media-libs/opencv-3.4.1-r5::gentoo
-[/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
 
 virtual/blas
 ============
@@ -406,9 +406,6 @@ sci-mathematics/jags/jags-4.0.0.ebuild
 profiles/arch/mips/use.mask
 105:# virtual/blas virtual/cblas and virtual/lapack not keyworded
 
-virtual/cblas
-=============
-
 sci-libs/clblast/clblast-0.10.0.ebuild
 22:	  virtual/cblas
 
@@ -529,9 +526,6 @@ profiles/arch/arm64/use.mask
 
 profiles/arch/sh/use.mask
 9:# cblas-external as virtual/cblas is also masked
-
-virtual/lapack
-==============
 
 profiles/use.desc
 162:lapack - Add support for the virtual/lapack numerical library
@@ -844,3 +838,16 @@ sci-chemistry/freeon/freeon-1.0.10.ebuild
 
 sci-chemistry/freeon/freeon-1.0.8-r1.ebuild
 24:	virtual/lapack"
+
+sci-geosciences/grass/grass-7.4.4.ebuild
+37:		sci-libs/cblas-reference
+
+media-gfx/opentoonz/opentoonz-1.3.0.ebuild
+38:	sci-libs/cblas-reference
+
+media-gfx/opentoonz/opentoonz-1.1.2.ebuild
+37:	sci-libs/blas-reference:=
+
+media-gfx/opentoonz/opentoonz-1.2.1-r1.ebuild
+38:	sci-libs/cblas-reference:=
+
