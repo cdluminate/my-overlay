@@ -1,8 +1,9 @@
 Reverse Dependency Checklist
 ============================
 
-[x] numpy
-[ ] scipy
+
+[x] numpy ()
+[ ] scipy [RR,OO=OK, BR=10 FAIL]
 [ ] octave
 [ ] r-core
 [ ] libreoffice
@@ -22,6 +23,8 @@ Reverse Dependency Checklist
 [ ] liblbfgs
 [ ] python-cvxopt
 [ ] armadillo
+
+(RR = reference+reference, BR=blis+reference, OO=openblas+openblas)
 
 virtual/blas
 ============
