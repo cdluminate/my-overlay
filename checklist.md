@@ -1,29 +1,30 @@
 Reverse Dependency Checklist
 ============================
 
-(RR = reference+reference, BR=blis+reference, OO=openblas+openblas)
+(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending)
 
-[x] =numpy-1.16.1-r1 [RR,BR,OO=OK]
-[ ] =scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
-[x] =octave-4.2.2 [RR,BR,OO=fine]
-[ ] r-core
-[ ] libreoffice
-[ ] gimp
-[ ] arpack
-[ ] superlu
-[ ] umfpack
-[ ] suitesparse?
-[ ] sundials
+[ ] armadillo
 [ ] cholmod?
+[ ] gimp
+[ ] liblbfgs
+[ ] liblinear
+[ ] libreoffice
+[ ] libsvm
+[ ] ltfatpy
+[ ] python-cvxopt
+[ ] r-core
+[ ] sagemath
 [ ] scalapack
 [ ] scilab
-[ ] sagemath
-[ ] ltfatpy
-[ ] liblinear
-[ ] libsvm
-[ ] liblbfgs
-[ ] python-cvxopt
-[ ] armadillo
+[-] scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
+[ ] suitesparse?
+[ ] sundials
+[ ] superlu
+[ ] umfpack
+[?] arpack-3.1.5
+[?] p4est-2.2
+[x] numpy-1.16.1-r1 [RR,BR,OO=OK]
+[x] octave-4.2.2 [RR,BR,OO=fine]
 
 virtual/blas
 ============
@@ -33,33 +34,6 @@ dev-libs/igraph/igraph-0.7.1-r2.ebuild
 
 sci-libs/punc/punc-1.5.ebuild
 27:	virtual/blas
-
-sci-libs/arpack/arpack-3.5.0.ebuild
-22:	virtual/blas
-
-sci-libs/arpack/arpack-3.1.5.ebuild
-26:	virtual/blas
-
-sci-libs/arpack/arpack-9999.ebuild
-25:	virtual/blas
-
-sci-libs/arpack/arpack-3.4.0.ebuild
-22:	virtual/blas
-
-sci-libs/p4est/p4est-9999.ebuild
-38:	virtual/blas
-
-sci-libs/p4est/p4est-1.1.ebuild
-29:	virtual/blas
-
-sci-libs/p4est/p4est-2.2.ebuild
-38:	virtual/blas
-
-sci-libs/p4est/p4est-1.0.ebuild
-29:	virtual/blas
-
-sci-libs/p4est/p4est-2.0.ebuild
-38:	virtual/blas
 
 sci-libs/cgcode/cgcode-1.0-r2.ebuild
 17:RDEPEND="virtual/blas"
