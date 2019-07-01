@@ -5,7 +5,7 @@ Reverse Dependency Checklist
 
 [x] =numpy-1.16.1-r1 [RR,BR,OO=OK]
 [ ] =scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
-[ ] octave
+[x] =octave-4.2.2 [RR,BR,OO=fine]
 [ ] r-core
 [ ] libreoffice
 [ ] gimp
