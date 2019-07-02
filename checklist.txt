@@ -4,6 +4,7 @@ Reverse Dependency Checklist
 `USE=blas lapack`
 (RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip, B=blocked)
 
+
 [ ] armadillo
 [ ] gimp
 [ ] liblbfgs
@@ -24,6 +25,7 @@ Reverse Dependency Checklist
 [/] julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
 [/] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
 [/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
+[/] sci-libs/magma/magma-1.4.0 [other reasons]
 [/] sci-libs/shogun-5.0.0::gentoo ['is_error' was not declared in this scope]
 [/] sci-libs/spqr-1.2.3-r1::gentoo [fail, automake]
 [/] sci-mathematics/Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
@@ -41,7 +43,16 @@ Reverse Dependency Checklist
 [?] sci-chemistry/psi-3.4.0-r2::gentoo
 [?] sci-libs/cholmod-2.1.2::gentoo
 [?] sci-libs/coinor-csdp-6.1.1-r1::gentoo
+[?] sci-libs/coinor-utils-2.9.11::gentoo
+[?] sci-libs/dlib-19.16::gentoo
+[?] sci-libs/dsdp-5.8-r3::gentoo
+[?] sci-libs/hypre-2.14.0::gentoo
+[?] sci-libs/ipopt-3.12.12::gentoo
 [?] sci-libs/itpp-4.3.1-r1::gentoo
+[?] sci-libs/levmar-2.6::gentoo
+[?] sci-libs/libghemical-3.0.0::gentoo
+[?] sci-libs/libsc-2.2::gentoo
+[?] sci-libs/mc-1.5::gentoo
 [?] sci-libs/p4est-2.2::gentoo
 [?] sci-libs/pastix-5.2.2.22-r1::gentoo
 [?] sci-libs/punc-1.5::gentoo
@@ -60,6 +71,9 @@ Reverse Dependency Checklist
 [B] media-gfx/opentoonz
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
 [B] sci-libs/gerris-20131206-r1 [by gsl]
+[B] sci-libs/gsl
+[B] sci-libs/mumps/mumps-5.1.2 [other]
+[B] sci-libs/o2scl-0.920 [by gsl]
 [B] sci-mathematics/gsl-shell-2.3.0_beta1 [by gsl]
 [B] sci-mathematics/xmds-2.2.2 [by gsl]
 [B] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
@@ -110,61 +124,3 @@ sci-libs/clblas/clblas-2.10.ebuild  35:	   virtual/blas
 sci-libs/clblast/clblast-0.10.0.ebuild  22:	  virtual/cblas
 sci-libs/coinhsl/coinhsl-2014.01.10.ebuild  22:	virtual/blas"
 sci-libs/coinhsl/coinhsl-2015.06.23.ebuild  20:	virtual/blas"
-sci-libs/coinor-csdp/coinor-csdp-6.1.1-r1.ebuild  20:	virtual/blas
-sci-libs/coinor-utils/coinor-utils-2.9.11.ebuild  22:	blas? ( virtual/blas )
-sci-libs/coinor-utils/coinor-utils-2.9.11.ebuild  24:	lapack? ( virtual/lapack )
-sci-libs/dlib/dlib-19.16.ebuild  23:	cblas? ( virtual/cblas:= )
-sci-libs/dlib/dlib-19.16.ebuild  27:	lapack? ( virtual/lapack:= )
-sci-libs/dlib/dlib-19.4.ebuild  21:	cblas? ( virtual/cblas:= )
-sci-libs/dlib/dlib-19.4.ebuild  24:	lapack? ( virtual/lapack:= )
-sci-libs/dlib/dlib-19.7.ebuild  20:	cblas? ( virtual/cblas:= )
-sci-libs/dlib/dlib-19.7.ebuild  23:	lapack? ( virtual/lapack:= )
-sci-libs/dlib/dlib-19.9.ebuild  20:	cblas? ( virtual/cblas:= )
-sci-libs/dlib/dlib-19.9.ebuild  23:	lapack? ( virtual/lapack:= )
-sci-libs/dlib/metadata.xml
-sci-libs/dsdp/dsdp-5.8-r3.ebuild  19:RDEPEND="virtual/lapack"
-sci-libs/gsl/gsl-1.16.ebuild  18:RDEPEND="cblas-external? ( virtual/cblas )"
-sci-libs/gsl/gsl-2.4.ebuild  18:RDEPEND="cblas-external? ( virtual/cblas:= )"
-sci-libs/gsl/gsl-2.5-r1.ebuild  18:RDEPEND="cblas-external? ( virtual/cblas:= )"
-sci-libs/gsl/gsl-2.5.ebuild  18:RDEPEND="cblas-external? ( virtual/cblas:= )"
-sci-libs/gsl/metadata.xml
-sci-libs/hypre/hypre-2.11.1.ebuild  21:	virtual/blas
-sci-libs/hypre/hypre-2.11.1.ebuild  22:	virtual/lapack
-sci-libs/hypre/hypre-2.11.2.ebuild  21:	virtual/blas
-sci-libs/hypre/hypre-2.11.2.ebuild  22:	virtual/lapack
-sci-libs/hypre/hypre-2.14.0.ebuild  21:	virtual/blas
-sci-libs/hypre/hypre-2.14.0.ebuild  22:	virtual/lapack
-sci-libs/hypre/hypre-2.9.0b.ebuild  21:	virtual/blas
-sci-libs/hypre/hypre-2.9.0b.ebuild  22:	virtual/lapack
-sci-libs/ipopt/ipopt-3.11.7.ebuild  23:	virtual/blas
-sci-libs/ipopt/ipopt-3.11.7.ebuild  25:	lapack? ( virtual/lapack )
-sci-libs/ipopt/ipopt-3.11.8.ebuild  24:	virtual/blas
-sci-libs/ipopt/ipopt-3.11.8.ebuild  26:	lapack? ( virtual/lapack )
-sci-libs/ipopt/ipopt-3.12.12.ebuild  24:	virtual/blas
-sci-libs/ipopt/ipopt-3.12.12.ebuild  26:	lapack? ( virtual/lapack )
-sci-libs/itpp/itpp-4.3.1-r1.ebuild  19:	virtual/blas
-sci-libs/lapack-reference/lapack-reference-3.2.1-r4.ebuild  24:	virtual/blas"
-sci-libs/lapack-reference/lapack-reference-3.6.0.ebuild  18:	>=virtual/blas-3.6
-sci-libs/lapack-reference/lapack-reference-3.7.0.ebuild  18:	>=virtual/blas-3.6
-sci-libs/levmar/levmar-2.6.ebuild  18:	virtual/blas
-sci-libs/levmar/levmar-2.6.ebuild  19:	virtual/lapack"
-sci-libs/libghemical/libghemical-3.0.0.ebuild  21:		virtual/blas
-sci-libs/libghemical/libghemical-3.0.0.ebuild  22:		virtual/lapack
-sci-libs/libsc/libsc-1.0-r1.ebuild  22:	virtual/blas
-sci-libs/libsc/libsc-1.0-r1.ebuild  23:	virtual/lapack
-sci-libs/libsc/libsc-1.1-r1.ebuild  22:	virtual/blas
-sci-libs/libsc/libsc-1.1-r1.ebuild  23:	virtual/lapack
-sci-libs/libsc/libsc-2.0.ebuild  31:	virtual/blas
-sci-libs/libsc/libsc-2.0.ebuild  32:	virtual/lapack
-sci-libs/libsc/libsc-2.2.ebuild  31:	virtual/blas
-sci-libs/libsc/libsc-2.2.ebuild  32:	virtual/lapack
-sci-libs/libsc/libsc-9999.ebuild  31:	virtual/blas
-sci-libs/libsc/libsc-9999.ebuild  32:	virtual/lapack
-sci-libs/magma/magma-1.4.0.ebuild  25:	virtual/cblas
-sci-libs/magma/magma-1.4.0.ebuild  26:	virtual/lapack"
-sci-libs/magma/magma-1.4.1.ebuild  25:	virtual/cblas
-sci-libs/magma/magma-1.4.1.ebuild  26:	virtual/lapack"
-sci-libs/mc/mc-1.5.ebuild  27:	virtual/blas
-sci-libs/mc/mc-1.5.ebuild  28:	virtual/lapack"
-sci-libs/mumps/mumps-5.1.2.ebuild  20:	virtual/blas
-sci-libs/o2scl/o2scl-0.920.ebuild  20:	virtual/cblas:=
