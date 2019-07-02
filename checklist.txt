@@ -4,6 +4,13 @@ Reverse Dependency Checklist
 `USE=blas lapack`
 (RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip, B=blocked)
 
+[/] sci-libs/coinhsl-2015.06.23 [cannot fetch]
+[?] sci-libs/clblas-2.10::gentoo
+[?] sci-libs/clblast-0.10.0::gentoo
+[?] sci-libs/clapack-3.2.1-r8::gentoo
+[?] sci-libs/cgcode-1.0-r2
+[?] sci-libs/ceres-solver-1.12.0::gentoo
+[?] sci-libs/armadillo-8.300.2::gentoo
 
 [ ] armadillo
 [ ] gimp
@@ -31,7 +38,7 @@ Reverse Dependency Checklist
 [/] sci-mathematics/Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
 [/] sci-physics/cernlib-2006-r5::gentoo [unrelated]
 [?] app-accessibility/sphinxbase-0.8::gentoo
-[?] arpack-3.1.5
+[?] sci-libs/arpack-3.1.5
 [?] dev-lang/R-3.4.1::gentoo
 [?] dev-python/cvxopt-1.1.9::gentoo
 [?] media-gfx/greycstoration-2.9-r2::gentoo
@@ -103,24 +110,3 @@ sci-chemistry/psi/psi-3.4.0-r2.ebuild  19:	virtual/blas
 sci-geosciences/grass/grass-7.4.4.ebuild  38:		virtual/blas
 sci-libs/ViSP/ViSP-3.0.1-r1.ebuild  28:	lapack? ( virtual/lapack )
 sci-libs/ViSP/ViSP-3.1.0-r1.ebuild  27:	lapack? ( virtual/lapack )
-sci-libs/armadillo/armadillo-8.300.2.ebuild  25:	blas? ( virtual/blas )
-sci-libs/armadillo/armadillo-8.300.2.ebuild  26:	lapack? ( virtual/lapack )
-sci-libs/armadillo/armadillo-9.200.5.ebuild  25:	blas? ( virtual/blas )
-sci-libs/armadillo/armadillo-9.200.5.ebuild  26:	lapack? ( virtual/lapack )
-sci-libs/armadillo/armadillo-9.200.6.ebuild  25:	blas? ( virtual/blas )
-sci-libs/armadillo/armadillo-9.200.6.ebuild  26:	lapack? ( virtual/lapack )
-sci-libs/arpack/arpack-3.1.5.ebuild  27:	virtual/lapack
-sci-libs/arpack/arpack-3.4.0.ebuild  23:	virtual/lapack
-sci-libs/arpack/arpack-3.5.0.ebuild  23:	virtual/lapack
-sci-libs/arpack/arpack-9999.ebuild  26:	virtual/lapack
-sci-libs/cblas-reference/cblas-reference-20030223-r6.ebuild  20:	virtual/blas
-sci-libs/cblas-reference/cblas-reference-20151113-r2.ebuild  22:	>=virtual/blas-3.6
-sci-libs/cblas-reference/cblas-reference-20161223.ebuild  22:	>=virtual/blas-3.6
-sci-libs/ceres-solver/ceres-solver-1.11.0.ebuild  24:	lapack? ( virtual/lapack )
-sci-libs/ceres-solver/ceres-solver-1.12.0.ebuild  24:	lapack? ( virtual/lapack )
-sci-libs/cgcode/cgcode-1.0-r2.ebuild  17:RDEPEND="virtual/blas"
-sci-libs/clapack/clapack-3.2.1-r8.ebuild  19:	virtual/blas"
-sci-libs/clblas/clblas-2.10.ebuild  35:	   virtual/blas
-sci-libs/clblast/clblast-0.10.0.ebuild  22:	  virtual/cblas
-sci-libs/coinhsl/coinhsl-2014.01.10.ebuild  22:	virtual/blas"
-sci-libs/coinhsl/coinhsl-2015.06.23.ebuild  20:	virtual/blas"
