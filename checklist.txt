@@ -25,10 +25,12 @@ Reverse Dependency Checklist
 [/] Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
 [/] gretl-1.9.90 [FAIL, unrelated]
 [/] julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
+[/] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
 [/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
 [?] app-accessibility/sphinxbase-0.8::gentoo
 [?] arpack-3.1.5
 [?] dev-lang/R-3.4.1::gentoo
+[?] dev-python/cvxopt-1.1.9::gentoo
 [?] jags-4.2.0
 [?] media-gfx/greycstoration-2.9-r2::gentoo
 [?] media-libs/opencv-3.4.1-r5::gentoo
@@ -37,11 +39,17 @@ Reverse Dependency Checklist
 [?] sci-biology/plink-1.07-r1::gentoo
 [?] sci-biology/vcftools-0.1.14::gentoo
 [?] sci-chemistry/mpqc-2.3.1-r4::gentoo
+[?] sci-chemistry/psi-3.4.0-r2::gentoo
+[?] sci-physics/harminv-1.3.1-r1::gentoo
 [?] sys-cluster/hpl-2.0-r3::gentoo
 [B] media-gfx/hugin/hugin-2019.0.0::gentoo
+[B] media-gfx/opentoonz
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
-[x] numpy-1.16.1-r1 [RR,BR,OO=OK]
+[B] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
+[x] dev-python/numpy-1.16.1-r1::gentoo [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
+[/] sci-physics/cernlib-2006-r5::gentoo [unrelated]
+[?] sci-physics/lammps-20180316::gentoo
 
 virtual/blas
 ============
@@ -493,18 +501,6 @@ sci-libs/scikits_learn/scikits_learn-0.18.1.ebuild
 30:	virtual/cblas
 39:	virtual/cblas
 
-dev-python/numpy/numpy-1.15.4.ebuild
-30:RDEPEND="lapack? ( virtual/cblas virtual/lapack )"
-
-dev-python/numpy/numpy-1.16.1.ebuild
-31:		virtual/cblas
-
-dev-python/numpy/numpy-1.14.5.ebuild
-30:RDEPEND="lapack? ( virtual/cblas virtual/lapack )"
-
-dev-python/numpy/numpy-1.8.2.ebuild
-31:	lapack? ( virtual/cblas virtual/lapack )"
-
 sci-biology/plink/plink-1.90_pre140514.ebuild
 22:	virtual/cblas
 
@@ -709,145 +705,4 @@ sci-libs/cholmod/cholmod-2.1.2.ebuild
 
 sci-libs/gerris/gerris-20131206-r1.ebuild
 33:	virtual/lapack
-
-sci-physics/lammps/lammps-20180308.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20160407.ebuild
-35:	virtual/lapack
-
-sci-physics/lammps/lammps-20151120.ebuild
-29:		virtual/lapack
-
-sci-physics/lammps/lammps-20170901.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20151209.ebuild
-29:		virtual/lapack
-
-sci-physics/lammps/lammps-20180222.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20181212.ebuild
-40:	virtual/lapack
-
-sci-physics/lammps/lammps-20160301.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20190605.ebuild
-40:	virtual/lapack
-
-sci-physics/lammps/lammps-20150210.ebuild
-53:		virtual/lapack
-
-sci-physics/lammps/lammps-20160730.ebuild
-35:	virtual/lapack
-
-sci-physics/lammps/lammps-20160310.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20151208.ebuild
-29:		virtual/lapack
-
-sci-physics/lammps/lammps-20151106.ebuild
-29:		virtual/lapack
-
-sci-physics/lammps/lammps-20170706.ebuild
-35:	virtual/lapack
-
-sci-physics/lammps/lammps-20160115.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20180316.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20180822.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20151207.ebuild
-29:		virtual/lapack
-
-sci-physics/lammps/lammps-20160122.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20150515-r1.ebuild
-55:		virtual/lapack
-
-sci-physics/lammps/lammps-20151211.ebuild
-29:		virtual/lapack
-
-sci-physics/lammps/lammps-20150515.ebuild
-55:		virtual/lapack
-
-sci-physics/lammps/lammps-20180117.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20150810.ebuild
-55:		virtual/lapack
-
-sci-physics/lammps/lammps-20160314.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20170901-r1.ebuild
-38:	virtual/lapack
-
-sci-physics/lammps/lammps-20160321.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20160216.ebuild
-31:		virtual/lapack
-
-sci-physics/lammps/lammps-20170109.ebuild
-35:	virtual/lapack
-
-sci-physics/cernlib/cernlib-2006-r6.ebuild
-25:	virtual/lapack
-
-sci-physics/cernlib/cernlib-2006-r7.ebuild
-25:	virtual/lapack
-
-sci-physics/cernlib/cernlib-2006-r5.ebuild
-26:	virtual/lapack
-
-sci-physics/sassena/sassena-1.4.2.ebuild
-23:	virtual/lapack
-
-dev-python/cvxopt/cvxopt-1.1.9.ebuild
-21:	virtual/lapack
-
-sci-physics/harminv/harminv-1.3.1-r1.ebuild
-17:RDEPEND="virtual/lapack"
-
-dev-python/numpy/numpy-1.15.4.ebuild
-30:RDEPEND="lapack? ( virtual/cblas virtual/lapack )"
-
-dev-python/numpy/numpy-1.8.2.ebuild
-31:	lapack? ( virtual/cblas virtual/lapack )"
-
-dev-python/numpy/numpy-1.16.1.ebuild
-32:		virtual/lapack
-
-dev-python/numpy/numpy-1.14.5.ebuild
-30:RDEPEND="lapack? ( virtual/cblas virtual/lapack )"
-
-sci-chemistry/psi/psi-3.4.0-r2.ebuild
-20:	virtual/lapack
-
-sci-chemistry/freeon/freeon-1.0.10.ebuild
-23:	virtual/lapack"
-
-sci-chemistry/freeon/freeon-1.0.8-r1.ebuild
-24:	virtual/lapack"
-
-sci-geosciences/grass/grass-7.4.4.ebuild
-37:		sci-libs/cblas-reference
-
-media-gfx/opentoonz/opentoonz-1.3.0.ebuild
-38:	sci-libs/cblas-reference
-
-media-gfx/opentoonz/opentoonz-1.1.2.ebuild
-37:	sci-libs/blas-reference:=
-
-media-gfx/opentoonz/opentoonz-1.2.1-r1.ebuild
-38:	sci-libs/cblas-reference:=
 
