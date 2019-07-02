@@ -2,32 +2,33 @@ Reverse Dependency Checklist
 ============================
 
 `USE=blas lapack`
-(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, .=FINE, ?=Installed but dont know how to test, -=pending, B=blocked)
+(RR = reference+reference, BR=blis+reference, OO=openblas+openblas, .=FINE,
+?=Installed but dont know how to test, -=pending, B=blocked, /=skip-not-for-us)
 
 [-] sci-libs/scikits_learn-0.19.0::gentoo [ftbfs]
 [-] sci-libs/scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
 
-[B] media-gfx/hugin/hugin-2019.0.0::gentoo
-[B] media-gfx/opentoonz
+[B] media-gfx/opentoonz [requires sci-libs/cblas-reference-20030223-r6:0/0::gentoo]
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
-[B] sci-libs/gerris-20131206-r1 [by gsl]
-[B] sci-libs/gsl
-[B] sci-libs/mumps/mumps-5.1.2 [other]
-[B] sci-libs/o2scl-0.920 [by gsl]
-[B] sci-mathematics/gsl-shell-2.3.0_beta1 [by gsl]
-[B] sci-mathematics/xmds-2.2.2 [by gsl]
-[B] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
-[B] dev-lang/julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
-[B] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
-[B] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
-[B] sci-libs/coinhsl-2015.06.23 [cannot fetch]
-[B] sci-libs/magma/magma-1.4.0 [other reasons]
-[B] sci-libs/shogun-5.0.0::gentoo ['is_error' was not declared in this scope]
-[B] sci-libs/spqr-1.2.3-r1::gentoo [fail, automake]
-[B] sci-mathematics/Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
-[B] sci-mathematics/gretl-1.9.90 [FAIL, unrelated]
-[B] sci-physics/cernlib-2006-r5::gentoo [unrelated]
 
+[/] media-gfx/hugin/hugin-2019.0.0::gentoo (ldd: exited with unknown exit code (134) | dev-libs/gobject-introspection-1.58.3::gentoo)
+[/] sci-libs/spqr-1.2.3-r1::gentoo [fail, automake]
+[/] sci-libs/coinhsl-2015.06.23 [cannot fetch]
+[/] sci-libs/magma/magma-1.4.0 [other reasons]
+[/] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
+[/] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
+[/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
+[/] sci-mathematics/gretl-1.9.90 [FAIL, unrelated]
+[/] sci-physics/cernlib-2006-r5::gentoo [unrelated]
+[/] sci-mathematics/Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
+[/] sci-libs/shogun-5.0.0::gentoo ['is_error' was not declared in this scope]
+[/] dev-lang/julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
+[/] sci-libs/mumps/mumps-5.1.2 [other]
+
+[?] sci-libs/gerris-20131206-r1::gentoo
+[?] sci-libs/o2scl-0.920::gentoo
+[?] app-arch/xdms-1.3.2-r1::gentoo
+[?] sci-mathematics/gsl-shell-2.3.0_beta1
 [?] app-accessibility/sphinxbase-0.8::gentoo
 [?] dev-lang/R-3.4.1::gentoo
 [?] dev-libs/igraph-0.7.1-r2::gentoo
@@ -55,6 +56,7 @@ Reverse Dependency Checklist
 [?] sci-libs/coinor-utils-2.9.11::gentoo
 [?] sci-libs/dlib-19.16::gentoo
 [?] sci-libs/dsdp-5.8-r3::gentoo
+[?] sci-libs/gsl-2.5-r1::gentoo ([B] sci-libs/gsl-2.5)
 [?] sci-libs/hypre-2.14.0::gentoo
 [?] sci-libs/ipopt-3.12.12::gentoo
 [?] sci-libs/itpp-4.3.1-r1::gentoo
