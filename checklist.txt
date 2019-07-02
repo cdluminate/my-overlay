@@ -4,6 +4,7 @@ Reverse Dependency Checklist
 `USE=blas lapack`
 (RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip, B=blocked)
 
+
 [ ] armadillo
 [ ] gimp
 [ ] liblbfgs
@@ -19,14 +20,16 @@ Reverse Dependency Checklist
 [ ] suitesparse?
 [ ] sundials
 [ ] superlu
-[ ] umfpack
+
 [-] scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
-[/] Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
+
 [/] gretl-1.9.90 [FAIL, unrelated]
 [/] julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
 [/] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
 [/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
+[/] sci-mathematics/Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
 [/] sci-physics/cernlib-2006-r5::gentoo [unrelated]
+
 [?] app-accessibility/sphinxbase-0.8::gentoo
 [?] arpack-3.1.5
 [?] dev-lang/R-3.4.1::gentoo
@@ -42,15 +45,22 @@ Reverse Dependency Checklist
 [?] sci-libs/cholmod-2.1.2::gentoo
 [?] sci-libs/coinor-csdp-6.1.1-r1::gentoo
 [?] sci-libs/itpp-4.3.1-r1::gentoo
+[?] sci-libs/sundials-3.1.2::gentoo
+[?] sci-libs/taucs-2.2::gentoo
+[?] sci-libs/umfpack-5.6.2::gentoo
 [?] sci-mathematics/jags-4.2.0::gentoo
 [?] sci-physics/harminv-1.3.1-r1::gentoo
 [?] sci-physics/lammps-20180316::gentoo
 [?] sys-cluster/hpl-2.0-r3::gentoo
+
 [B] media-gfx/hugin/hugin-2019.0.0::gentoo
 [B] media-gfx/opentoonz
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
 [B] sci-libs/gerris-20131206-r1 [by gsl]
+[B] sci-mathematics/gsl-shell-2.3.0_beta1 [by gsl]
+[B] sci-mathematics/xmds-2.2.2 [by gsl]
 [B] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
+
 [x] dev-python/numpy-1.16.1-r1::gentoo [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
 
@@ -196,39 +206,10 @@ sci-libs/scikits_learn/scikits_learn-0.18.2.ebuild  29:	virtual/blas
 sci-libs/scikits_learn/scikits_learn-0.18.2.ebuild  30:	virtual/cblas
 sci-libs/scikits_learn/scikits_learn-0.19.0.ebuild  31:	virtual/blas:=
 sci-libs/scikits_learn/scikits_learn-0.19.0.ebuild  32:	virtual/cblas:=
-sci-libs/scipy/scipy-0.16.1.ebuild  30:	virtual/cblas
-sci-libs/scipy/scipy-0.16.1.ebuild  31:	virtual/lapack
-sci-libs/scipy/scipy-0.18.1.ebuild  30:	virtual/cblas
-sci-libs/scipy/scipy-0.18.1.ebuild  31:	virtual/lapack
-sci-libs/scipy/scipy-0.19.1.ebuild  30:	virtual/cblas
-sci-libs/scipy/scipy-0.19.1.ebuild  31:	virtual/lapack
-sci-libs/scipy/scipy-1.0.0.ebuild  30:	virtual/cblas
-sci-libs/scipy/scipy-1.0.0.ebuild  31:	virtual/lapack
-sci-libs/scipy/scipy-1.1.0.ebuild  30:	virtual/cblas
-sci-libs/scipy/scipy-1.1.0.ebuild  31:	virtual/lapack
-sci-libs/scipy/scipy-9999.ebuild  25:	virtual/cblas
-sci-libs/scipy/scipy-9999.ebuild  26:	virtual/lapack
 sci-libs/shogun/shogun-5.0.0.ebuild  49:	virtual/blas
 sci-libs/shogun/shogun-5.0.0.ebuild  50:	virtual/cblas
 sci-libs/shogun/shogun-5.0.0.ebuild  51:	virtual/lapack
 sci-libs/spqr/spqr-1.3.1.ebuild  17:	virtual/lapack
-sci-libs/sundials/sundials-2.7.0.ebuild  22:	lapack? ( virtual/lapack )
-sci-libs/sundials/sundials-3.0.0.ebuild  22:	lapack? ( virtual/lapack )
-sci-libs/sundials/sundials-3.1.0.ebuild  22:	lapack? ( virtual/lapack )
-sci-libs/sundials/sundials-3.1.2.ebuild  22:	lapack? ( virtual/lapack )
 sci-libs/superlu/superlu-4.3-r1.ebuild  23:	virtual/blas"
 sci-libs/superlu/superlu-5.2.1-r1.ebuild  32:RDEPEND="virtual/blas"
 sci-libs/superlu_mt/superlu_mt-3.1.ebuild  21:RDEPEND="virtual/blas"
-sci-libs/taucs/taucs-2.2.ebuild  18:	virtual/blas
-sci-libs/taucs/taucs-2.2.ebuild  19:	virtual/lapack
-sci-libs/umfpack/umfpack-5.6.2.ebuild  20:	virtual/blas
-sci-mathematics/Macaulay2/Macaulay2-1.8.2.1-r1.ebuild  44:	virtual/blas
-sci-mathematics/gsl-shell/gsl-shell-2.3.0_beta1.ebuild  20:	virtual/blas
-sci-mathematics/jags/jags-3.4.0.ebuild  20:	virtual/blas
-sci-mathematics/jags/jags-4.0.0.ebuild  20:	virtual/blas
-sci-mathematics/jags/jags-4.1.0.ebuild  20:	virtual/blas
-sci-mathematics/jags/jags-4.2.0.ebuild  20:	virtual/blas
-sci-mathematics/octave/octave-4.2.2.ebuild  24:	virtual/blas
-sci-mathematics/octave/octave-4.4.0.ebuild  24:	virtual/blas
-sci-mathematics/octave/octave-4.4.1.ebuild  24:	virtual/blas
-sci-mathematics/xmds/xmds-2.2.2.ebuild  28:#virtual/cblas
