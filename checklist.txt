@@ -4,51 +4,43 @@ Reverse Dependency Checklist
 `USE=blas lapack`
 (RR = reference+reference, BR=blis+reference, OO=openblas+openblas, x=FINE, ?=Installed but dont know how to test, -=pending, /=skip, B=blocked)
 
-[/] sci-libs/coinhsl-2015.06.23 [cannot fetch]
-[?] sci-libs/clblas-2.10::gentoo
-[?] sci-libs/clblast-0.10.0::gentoo
-[?] sci-libs/clapack-3.2.1-r8::gentoo
-[?] sci-libs/cgcode-1.0-r2
-[?] sci-libs/ceres-solver-1.12.0::gentoo
-[?] sci-libs/armadillo-8.300.2::gentoo
-
-[ ] armadillo
-[ ] gimp
-[ ] liblbfgs
-[ ] liblinear
-[ ] libreoffice
-[ ] libsvm
-[ ] ltfatpy
-[ ] r-core
-[ ] sagemath
-[ ] scalapack
-[ ] scilab
-[ ] suitesparse?
-[ ] sundials
-[ ] superlu
 [-] sci-libs/scikits_learn-0.19.0::gentoo [ftbfs]
-[-] scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
-[/] gretl-1.9.90 [FAIL, unrelated]
-[/] julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
+[-] sci-libs/scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
+
+[/] dev-lang/julia-1.1.1 [blocked by sci-libs/spqr-1.2.3-r1 due to unrelated error]
 [/] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
 [/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
+[/] sci-libs/coinhsl-2015.06.23 [cannot fetch]
 [/] sci-libs/magma/magma-1.4.0 [other reasons]
 [/] sci-libs/shogun-5.0.0::gentoo ['is_error' was not declared in this scope]
 [/] sci-libs/spqr-1.2.3-r1::gentoo [fail, automake]
 [/] sci-mathematics/Macaulay2-1.8.2.1-r1 [FAIL, multiple definition of `__gmpn_preinv_divrem_1']
+[/] sci-mathematics/gretl-1.9.90 [FAIL, unrelated]
 [/] sci-physics/cernlib-2006-r5::gentoo [unrelated]
+
 [?] app-accessibility/sphinxbase-0.8::gentoo
-[?] sci-libs/arpack-3.1.5
 [?] dev-lang/R-3.4.1::gentoo
+[?] dev-libs/igraph-0.7.1-r2::gentoo
+[?] dev-libs/liblinear-210-r1::gentoo
+[?] dev-libs/starpu-1.2.6::gentoo
 [?] dev-python/cvxopt-1.1.9::gentoo
 [?] media-gfx/greycstoration-2.9-r2::gentoo
 [?] media-libs/opencv-3.4.1-r5::gentoo
 [?] sci-astronomy/casacore-2.3.0-r1::gentoo
 [?] sci-biology/plink-1.07-r1::gentoo
 [?] sci-biology/vcftools-0.1.14::gentoo
+[?] sci-chemistry/apbs-1.4.1-r2::gentoo
 [?] sci-chemistry/mpqc-2.3.1-r4::gentoo
 [?] sci-chemistry/psi-3.4.0-r2::gentoo
+[?] sci-libs/ViSP-3.1.0-r1::gentoo
+[?] sci-libs/armadillo-8.300.2::gentoo
+[?] sci-libs/arpack-3.1.5
+[?] sci-libs/ceres-solver-1.12.0::gentoo
+[?] sci-libs/cgcode-1.0-r2
 [?] sci-libs/cholmod-2.1.2::gentoo
+[?] sci-libs/clapack-3.2.1-r8::gentoo
+[?] sci-libs/clblas-2.10::gentoo
+[?] sci-libs/clblast-0.10.0::gentoo
 [?] sci-libs/coinor-csdp-6.1.1-r1::gentoo
 [?] sci-libs/coinor-utils-2.9.11::gentoo
 [?] sci-libs/dlib-19.16::gentoo
@@ -74,6 +66,7 @@ Reverse Dependency Checklist
 [?] sci-physics/harminv-1.3.1-r1::gentoo
 [?] sci-physics/lammps-20180316::gentoo
 [?] sys-cluster/hpl-2.0-r3::gentoo
+
 [B] media-gfx/hugin/hugin-2019.0.0::gentoo
 [B] media-gfx/opentoonz
 [B] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo
@@ -84,29 +77,6 @@ Reverse Dependency Checklist
 [B] sci-mathematics/gsl-shell-2.3.0_beta1 [by gsl]
 [B] sci-mathematics/xmds-2.2.2 [by gsl]
 [B] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
+
 [x] dev-python/numpy-1.16.1-r1::gentoo [RR,BR,OO=OK]
 [x] octave-4.2.2 [RR,BR,OO=fine]
-
-
-dev-lang/R/R-3.4.1.ebuild  29:	virtual/blas:0
-dev-lang/R/R-3.5.3.ebuild  30:	virtual/blas:0
-dev-lang/R/R-3.6.0.ebuild  30:	virtual/blas:0
-dev-lang/julia/julia-1.1.0.ebuild  54:	>=virtual/blas-3.6
-dev-lang/julia/julia-1.1.1.ebuild  54:	>=virtual/blas-3.6
-dev-lang/julia/julia-9999.ebuild  45:	>=virtual/blas-3.6
-dev-libs/igraph/igraph-0.7.1-r2.ebuild  20:	virtual/blas
-dev-libs/igraph/igraph-0.7.1-r2.ebuild  21:	virtual/lapack
-dev-libs/liblinear/liblinear-210-r1.ebuild  18:	blas? ( virtual/blas )
-dev-libs/liblinear/liblinear-221.ebuild  17:	blas? ( virtual/blas )
-dev-libs/liblinear/liblinear-230.ebuild  17:	blas? ( virtual/blas )
-dev-libs/starpu/starpu-1.2.6.ebuild  25:	blas? ( virtual/blas )
-sci-astronomy/casacore/casacore-2.3.0-r1.ebuild  24:	virtual/blas:=
-sci-biology/plink/plink-1.90_pre140514.ebuild  22:	virtual/cblas
-sci-chemistry/apbs/apbs-1.4.1-r2.ebuild  30:	virtual/blas
-sci-chemistry/freeon/freeon-1.0.10.ebuild  22:	virtual/blas
-sci-chemistry/freeon/freeon-1.0.8-r1.ebuild  23:	virtual/blas
-sci-chemistry/mpqc/mpqc-2.3.1-r4.ebuild  18:	virtual/blas
-sci-chemistry/psi/psi-3.4.0-r2.ebuild  19:	virtual/blas
-sci-geosciences/grass/grass-7.4.4.ebuild  38:		virtual/blas
-sci-libs/ViSP/ViSP-3.0.1-r1.ebuild  28:	lapack? ( virtual/lapack )
-sci-libs/ViSP/ViSP-3.1.0-r1.ebuild  27:	lapack? ( virtual/lapack )
