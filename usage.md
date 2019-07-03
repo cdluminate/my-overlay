@@ -160,7 +160,7 @@ provided. They manipulates configuration files under the `/etc/ld.so.conf.d/`
 directory, hinting `ld.so` on the places to find the BLAS/LAPACK libraries.
 
 As a side effect, this solution depends on the `ld.so.conf` support from the
-system C standard library. BesidesPlus, It's recommended to read the code if
+system C standard library. Besides, It's recommended to read the code if
 you need even more details.
 
 Frequently Asked Questions
@@ -184,7 +184,7 @@ register it with `eselect blas add lib64 /path/to/mkl/ mkl`. Note that building
 programs when MKL is selected is discouraged. The reason could be found in the
 developer guide part.
 
-Authors, Acknowledgements, Credits
+Authors, Acknowledgement, Credits
 ==================================
 
 Author: Mo Zhou <lumin@debian.org>
