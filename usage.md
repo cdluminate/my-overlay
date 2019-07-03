@@ -1,3 +1,12 @@
+GSoC2019/Gentoo: BLAS/LAPACK Runtime Switch
+===========================================
+
+Table of Contents
+
+1. BLAS/LAPACK Runtime Switch: User Guide
+2. BLAS/LAPACK Runtime Switch: Developer Guide
+3. Implementation Details
+
 BLAS/LAPACK Runtime Switch: User Guide
 ======================================
 
@@ -10,7 +19,7 @@ They could just ignore the `eselect-ldso` USE flag and install things under the 
 First the skeleton part needs to be installed:
 
 ```
-USE=eselect-ldso emerge --ask >=virtual/blas-3.8 >=virtual/lapack-3.8
+# USE=eselect-ldso emerge --ask >=virtual/blas-3.8 >=virtual/lapack-3.8
 ```
 
 The above command will pull in the reference BLAS/LAPACK and the customized
@@ -18,8 +27,8 @@ eselect modules for BLAS and LAPACK. Now you should be able to list BLAS
 or LAPACK candidates by issuing:
 
 ```
-eselect blas list
-eselect lapack list
+# eselect blas list
+# eselect lapack list
 ```
 
 Some candidates are avaialble in Gentoo's main repo, for example BLIS and
@@ -28,16 +37,16 @@ the ebuild scripts will automatically register them in the mechanism. For
 example:
 
 ```
-USE=eselect-ldso emerge --ask >=sci-libs/blis-0.6.0
-USE=eselect-ldso emerge --ask >=sci-libs/openblas-0.3.5
+# USE=eselect-ldso emerge --ask >=sci-libs/blis-0.6.0
+# USE=eselect-ldso emerge --ask >=sci-libs/openblas-0.3.5
 ```
 
 Note, nothing will be registered if you missed the `eselect-ldso` flag.
 After installation, we could switch the libraries like so:
 
 ```
-eselect blas set openblas
-eselect blas set openblas
+# eselect blas set openblas
+# eselect lapack set openblas
 ```
 
 Here are some recommended combinations for your choice:
@@ -79,3 +88,8 @@ and LAPACK, please add corresponding virtual packages in the dependency, i.e.
 these virtual packages must assume a standard (reference) API and ABI.
 Otherwise, please write a specific implementation in the dependency list,
 e.g. `sci-libs/blis`, and link the ELF files against e.g. `-lblis`.
+
+Implementation Details
+======================
+
+eselect + ld.so.conf
