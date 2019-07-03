@@ -140,7 +140,28 @@ dependency list and avoid linking against `-l{,c}blas` or `-llapack`.
 Implementation Details
 ======================
 
-eselect + ld.so.conf
+The core part of the implementation involves `>=sci-libs/lapack-3.8.0`,
+`>=eselect-blas-0.2` and `>=eselect-lapack-0.2`, where the former one controls
+both (fortran) BLAS and CBLAS alternatives at the same time.
+
+The `sci-libs/lapack` is codebase of the reference (or standard) BLAS, CBLAS,
+LAPACK, and LAPACKE. BLAS and LAPACK are a set of stable Fortran API / ABI.
+CBLAS and LAPACKE are thin wrappers around BLAS and LAPACK respectively,
+providing the C API / ABI. In our BLAS/LAPACK runtime switching mechanism,
+every candidate must provide every API / ABI that the reference implementation
+provides. Taking advantage of the API/ABI stability, we can change the backend
+libraries (e.g. `libblas.so.3`) without recompiling applications as long as the
+new one provides a compatible set of ABI.
+
+The users could easily switch the libraries by adjusting the `LD_LIBRARY_PATH`
+environment variables as a temporary solution. For system level library
+switching, two custom eselect modules (`eselect-blas`, `eselect-lapack`) are
+provided. They manipulates configuration files under the `/etc/ld.so.conf.d/`
+directory, hinting `ld.so` on the places to find the BLAS/LAPACK libraries.
+
+As a side effect, this solution depends on the `ld.so.conf` support from the
+system C standard library. BesidesPlus, It's recommended to read the code if
+you need even more details.
 
 Frequently Asked Questions
 ==========================
