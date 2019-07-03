@@ -6,7 +6,8 @@ Table of Contents
 1. BLAS/LAPACK Runtime Switch: User Guide
 2. BLAS/LAPACK Runtime Switch: Developer Guide
 3. Implementation Details
-4. Frequently Asked Questions
+4. Pitfalls
+5. Frequently Asked Questions
 
 BLAS/LAPACK Runtime Switch: User Guide
 ======================================
@@ -162,6 +163,15 @@ directory, hinting `ld.so` on the places to find the BLAS/LAPACK libraries.
 As a side effect, this solution depends on the `ld.so.conf` support from the
 system C standard library. Besides, It's recommended to read the code if
 you need even more details.
+
+Pitfalls
+========
+
+1. Please don't use pthread and openmp at the same time since it may incur
+significant performance drop due to excessive thread creation.
+
+2. Please don't use GNU OpenMP (`libgomp.so`) and (`libiomp.so`) at the same
+time as the symbol clash between them may lead to silent computation error.
 
 Frequently Asked Questions
 ==========================
