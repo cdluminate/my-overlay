@@ -66,8 +66,10 @@ so:
 # eselect lapack set openblas
 ```
 
-Run your program again and see if it's running more faster than before. No
-any recompilation is required with this mechanism.
+Directly run your program again and see if it's running faster. No any
+re-compilation is required thanks to this mechanism. For more details
+about the `eselect blas` or `eselect-lapack` usage please look up the
+manual page or the help messages.
 
 ## Side Notes
 
