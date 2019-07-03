@@ -90,28 +90,52 @@ Note the following combinations are discouraged:
 BLAS/LAPACK Runtime Switch: Developer Guide
 ===========================================
 
-## BLAS/LAPACK package Maintainers
+## BLAS/LAPACK Providers
 
-0. Provide extra shared objects in a private library directory, e.g.
-`/usr/lib64/blas/<foobar>/lib{,c}blas.so{,.3}`,
-`/usr/lib64/lapack/<foobar>/liblapack.so{,.3}`. These private libraries must
-have matching file names and SONAMEs. (Not mandatory for special cases such as
-MKL)
+It must be pointed out that for any BLAS/LAPACK implementation, providing extra
+shared object with proper SONAMEs is necessary. For example, we cannot use
+`libopenblas.so.0 (SONAME=libopenblas.so.0)` as the BLAS/CBLAS provider by
+simply symlinking it into `libblas.so{,.3}` and `libcblas.so{,.3}` because any
+program to be linked against BLAS (`-lblas`) or CBLAS (`-lcblas`) will be
+eventually linked against `libopenblas.so.0` (you can verify this with `readelf
+-d foobar`), which will clearly break the runtime switching mechanism. The
+current solution is to patch upstream build systems and build customized shared
+objects with proper SONAMEs.
 
-1. Register an alternative with `eselect blas add ...` during postinst.
+To package a BLAS/LAPACK provider with the runtime switching feature enabled,
+the maintainer should pay attention to the following points:
 
-2. Remove an alternative with `eselect blas validate` during postrm.
+1. Patch upstream build systems and provide extra shared objects in a private
+   library directory. Specifially, a new BLAS/CBLAS implementation, say
+"myblas", should install 4 files to the `/usr/lib64/blas/<myblas>/` directory:
+(1) `libblas.so.3` (ELF shared object, providing the fortran BLAS ABI,
+SONAME=`libblas.so.3`); (2) `libblas.so` (symlink pointing to `libblas.so.3`);
+(3) `libcblas.so.3` (ELF shared object, providing the C BLAS ABI,
+SONAME=`libcblas.so.3`); (4) `libcblas.so` (symlink pointing to
+`libcblas.so.3`). Similarly, a new LAPACK implementation, say "mylapack" should
+install 2 files to the `/usr/lib64/blas/<mylapack>` directory: (1)
+`liblapack.so.3` (ELF shared object, providing the fortran LAPACK ABI,
+SONAME=`liblapack.so.3`); (2) `liblapack.so` (symlink pointing to
+`liblapack.so`).
 
-Examples: ebuild files for `sci-libs/lapack`, `sci-libs/blis`, `sci-libs/openblas`.
+2. Register an alternative with `eselect blas add ...` during postinst.
 
-## BLAS/LAPACK Reverse Dependency Maintainers
+3. Remove an alternative with `eselect blas validate` during postrm.
 
-If your package needs to be linked against the reference (aka. netlib) BLAS
-and LAPACK, please add corresponding virtual packages in the dependency, i.e.
-`virtual/{blas,cblas,lapack,lapacke}`. Any package to be linked against
-these virtual packages must assume a standard (reference) API and ABI.
-Otherwise, please write a specific implementation in the dependency list,
-e.g. `sci-libs/blis`, and link the ELF files against e.g. `-lblis`.
+4. Guard the code associated with all the above points with the `eselect-ldso`
+   USE flag.
+
+For real example please see ebuild files for `>=sci-libs/lapack-3.8.0`,
+`>=sci-libs/blis-0.5.2`, `>=sci-libs/openblas-0.3.5`.
+
+## BLAS/LAPACK Reverse Dependencies
+
+If a package needs to be linked against the reference (aka. netlib) BLAS and
+LAPACK, it should declare virtual packages dependency, i.e.
+`virtual/{blas,cblas,lapack,lapacke}` instead of a specific implementation.  In
+this case the package must assume a standard (reference) API and ABI from the
+virtual package. Otherwise, please write a specific implementation in the
+dependency list and avoid linking against `-l{,c}blas` or `-llapack`.
 
 Implementation Details
 ======================
@@ -121,4 +145,20 @@ eselect + ld.so.conf
 Frequently Asked Questions
 ==========================
 
-1. MKL?
+**Q:** Some BLAS/LAPACK implementations support 64-bit array indexing, which provides
+functions such as `sasum(int64_t N, float* X, int64_t INCX)`. How does this
+mechanism deal with such feature?
+
+A: The "BLAS64" or "BLAS-ILP64" ABI is different from the "BLAS32" or
+"BLAS-LP64" ABI. Mixing them together will lead to unpredictable results, hence
+the "BLAS64" feature is not integrated into the mechanism. When the demand on
+"BLAS64" is common enough, we could provide another pair of eselect modules,
+i.e. `eselect-blas64` and `eselect-lapack64`.
+
+**Q:** How do I add Intel's MKL into this mechanism?
+
+A: [Not verified]. Install MKL to `/path/to/mkl`, and symlink
+`/path/to/mkl/libmkl_rt.so` to `/path/to/mkl/lib{,c}blas.so{,.3}`. Then
+register it with `eselect blas add lib64 /path/to/mkl/ mkl`. Note that building
+programs when MKL is selected is discouraged. The reason could be found in the
+developer guide part.
