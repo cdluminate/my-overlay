@@ -6,7 +6,7 @@ Reverse Dependency Checklist
 ?=Installed but dont know how to test, -=pending, B=blocked, /=skip-not-for-us)
 
 [-] sci-libs/scikits_learn-0.19.0::gentoo [ftbfs]
-[-] sci-libs/scipy-1.1.0 [RR,OO=OK, BR=10 FAIL]
+[-] sci-libs/scipy-1.1.0 [RR,OO=OK, BR=10 FAIL (due to numerical precision)]
 [-] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo [fixed in r1]
 [-] media-gfx/opentoonz [requires sci-libs/cblas-reference-20030223-r6:0/0::gentoo PR][failed due to dev-libs/gobject-introspection-1.58.3]
 
