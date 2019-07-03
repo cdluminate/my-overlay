@@ -183,3 +183,14 @@ A: [Not verified]. Install MKL to `/path/to/mkl`, and symlink
 register it with `eselect blas add lib64 /path/to/mkl/ mkl`. Note that building
 programs when MKL is selected is discouraged. The reason could be found in the
 developer guide part.
+
+Authors, Acknowledgements, Credits
+==================================
+
+Author: Mo Zhou <lumin@debian.org>
+GSoC Mentor: Benda Xu <heroxbd@gentoo.org>
+
+This work is supported by Google through Google Summer of Code. [Project Link](https://summerofcode.withgoogle.com/projects/#6268942782300160)
+
+Thanks to Zongyu Zhang who [fixed a bug in numpy ebuild](https://github.com/gentoo/gentoo/commit/f5c71a4aa9615c8c14caa8e7076519ab2a4b9824#diff-e86a27d02ab70b6118a6b04d18ff075e)
+so that numpy could make use of the switching mechanism correctly.
