@@ -5,7 +5,7 @@ Reverse Dependency Checklist
 (RR = reference+reference, BR=blis+reference, OO=openblas+openblas, .=FINE,
 ?=Installed but dont know how to test, -=pending, B=blocked, /=skip-not-for-us)
 
-[-] sci-libs/scikits_learn-0.19.0::gentoo [ftbfs]
+[-] sci-libs/scikits_learn-0.19.0::gentoo [ftbfs https://github.com/scikit-learn/scikit-learn/issues/13632 https://bugs.gentoo.org/630294]
 [-] sci-libs/scipy-1.1.0 [RR,OO=OK, BR=10 FAIL (due to numerical precision)]
 [-] sci-geosciences/grass-7.4.4:0/7.4.0::gentoo [fixed in r1]
 [-] media-gfx/opentoonz [requires sci-libs/cblas-reference-20030223-r6:0/0::gentoo PR][failed due to dev-libs/gobject-introspection-1.58.3]
@@ -13,7 +13,7 @@ Reverse Dependency Checklist
 [/] media-gfx/hugin/hugin-2019.0.0::gentoo (ldd: exited with unknown exit code (134) | dev-libs/gobject-introspection-1.58.3::gentoo)
 [/] sci-libs/spqr-1.2.3-r1::gentoo [fail, automake]
 [/] sci-libs/coinhsl-2015.06.23 [cannot fetch]
-[/] sci-libs/magma/magma-1.4.0 [other reasons]
+[/] sci-libs/magma/magma-1.4.0 [other reasons: somehow requires a kernel, but the kernel cannot find kernel module for zfs hence failed to install. it's cuda stuff, giving up.]
 [/] sci-physics/sassena/sassena-1.4.2.ebuild [HDF5]
 [/] sci-chemistry/freeon-1.0.10::gentoo [FAIL, hdf5 compat]
 [/] sci-chemistry/gromacs-2019.2::gentoo [FAIL, pdf not found]
