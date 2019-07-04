@@ -188,11 +188,26 @@ i.e. `eselect-blas64` and `eselect-lapack64`.
 
 **Q:** How do I add Intel's MKL into this mechanism?
 
-A: [Not verified]. Install MKL to `/path/to/mkl`, and symlink
-`/path/to/mkl/libmkl_rt.so` to `/path/to/mkl/lib{,c}blas.so{,.3}`. Then
-register it with `eselect blas add lib64 /path/to/mkl/ mkl`. Note that building
-programs when MKL is selected is discouraged. The reason could be found in the
-developer guide part.
+A: Install MKL to `/path/to/mkl`, and symlink `/path/to/mkl/libmkl_rt.so` to
+`/path/to/mkl/lib{,c}blas.so{,.3}`. Then register it with `eselect blas add
+lib64 /path/to/mkl/ mkl`. Note that building programs when MKL is selected is
+discouraged. The reason could be found in the developer guide part.
+
+A real example about adding and setting Intel MKL as the backend library:
+```
+# pip install mkl --user
+# cd ~/.local/lib/
+# ln -s libmkl_rt.so libblas.so.3
+# ln -s libmkl_rt.so libblas.so  
+# ln -s libmkl_rt.so libcblas.so.3
+# ln -s libmkl_rt.so libcblas.so  
+# eselect blas add lib64 $(pwd) mkl
+# ln -s libmkl_rt.so liblapack.so.3
+# ln -s libmkl_rt.so liblapack.so  
+# eselect lapack add lib64 $(pwd) mkl
+# eselect blas set mkl
+# eselect lapack set mkl
+```
 
 Authors, Acknowledgement, Credits
 ==================================
