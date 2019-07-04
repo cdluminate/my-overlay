@@ -209,6 +209,10 @@ A real example about adding and setting Intel MKL as the backend library:
 # eselect lapack set mkl
 ```
 
+To remove the MKL candidate or any other customized library, just remove the
+corresponding files under `/etc/env.d/blas/` and `/etc/env.d/lapack/`
+directories, then select some other candidates.
+
 Authors, Acknowledgement, Credits
 ==================================
 
