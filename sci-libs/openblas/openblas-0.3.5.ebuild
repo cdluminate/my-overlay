@@ -27,13 +27,13 @@ openblas_flags() {
 	use dynamic && \
 		flags+=( DYNAMIC_ARCH=1 TARGET=GENERIC NUM_THREADS=64 NO_AFFINITY=1 )
 	if use openmp; then
-		flags+=( USE_THREAD=1 USE_OPENMP=0 )
-	elif use pthread; then
 		flags+=( USE_THREAD=1 USE_OPENMP=1 )
+	elif use pthread; then
+		flags+=( USE_THREAD=1 USE_OPENMP=0 )
 	else
 		flags+=( USE_THREAD=0 ) # serial
 	fi
-	flags+=( PREFIX="/usr" DESTDIR="${ED}")
+	flags+=( PREFIX="${EPREFIX}" DESTDIR="${D}")
 	flags+=( OPENBLAS_INCLUDE_DIR='$(PREFIX)'/include/${PN} )
 	flags+=( OPENBLAS_LIBRARY_DIR='$(PREFIX)'/$(get_libdir) )
 	echo "${flags[@]}"
@@ -55,13 +55,15 @@ src_install () {
 
 	if use eselect-ldso; then
 		dodir /usr/$(get_libdir)/blas/openblas/
-		install -Dm0644 interface/libblas.so.3 ${ED}/usr/$(get_libdir)/blas/openblas/libblas.so.3
+		insinto /usr/$(get_libdir)/blas/openblas/
+		doins interface/libblas.so.3
 		dosym libblas.so.3 usr/$(get_libdir)/blas/openblas/libblas.so
-		install -Dm0644 interface/libcblas.so.3  ${ED}/usr/$(get_libdir)/blas/openblas/libcblas.so.3
+		doins interface/libcblas.so.3
 		dosym libcblas.so.3 usr/$(get_libdir)/blas/openblas/libcblas.so
 
 		dodir /usr/$(get_libdir)/lapack/openblas/
-		install -Dm0644 interface/liblapack.so.3 ${ED}/usr/$(get_libdir)/lapack/openblas/liblapack.so.3
+		insinto /usr/$(get_libdir)/lapack/openblas/
+		doins interface/liblapack.so.3
 		dosym liblapack.so.3 usr/$(get_libdir)/lapack/openblas/liblapack.so
 	fi
 }
@@ -72,5 +74,12 @@ pkg_postinst () {
 			${EROOT}/usr/$(get_libdir)/blas/openblas openblas
 		eselect lapack add $(get_libdir) \
 			${EROOT}/usr/$(get_libdir)/lapack/openblas openblas
+	fi
+}
+
+pkg_postrm () {
+	if use eselect-ldso; then
+		eselect blas validate
+		eselect lapack validate
 	fi
 }
