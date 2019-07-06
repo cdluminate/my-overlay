@@ -33,7 +33,7 @@ openblas_flags() {
 	else
 		flags+=( USE_THREAD=0 ) # serial
 	fi
-	flags+=( PREFIX="${EPREFIX}" DESTDIR="${D}")
+	flags+=( DESTDIR="${D}" PREFIX="${EPREFIX}/usr" )
 	flags+=( OPENBLAS_INCLUDE_DIR='$(PREFIX)'/include/${PN} )
 	flags+=( OPENBLAS_LIBRARY_DIR='$(PREFIX)'/$(get_libdir) )
 	echo "${flags[@]}"
