@@ -176,6 +176,13 @@ time as the symbol clash between them may lead to silent computation error.
 Frequently Asked Questions
 ==========================
 
+**Q:** I disabled this feature when installing a bunch of packages, but now I
+regret and want to enable the runtime switching feature. How should I do?
+
+A: Simply reinstall the virtual packages and your favorate BLAS/LAPACK
+providers with the `eselect-ldso` flag toggled. The whole dependency tree
+doesn't need to be rebuilt as a rebuild is expected to make no difference.
+
 **Q:** Some BLAS/LAPACK implementations support 64-bit array indexing, which provides
 functions such as `sasum(int64_t N, float* X, int64_t INCX)`. How does this
 mechanism deal with such feature?
