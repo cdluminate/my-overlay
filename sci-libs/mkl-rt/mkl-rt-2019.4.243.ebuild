@@ -17,40 +17,59 @@ RDEPEND="eselect-ldso? ( !app-eselect/eselect-cblas
                          =app-eselect/eselect-blas-0.2 )"
 DEPEND="${RDEPEND}"
 
-src_install () {
+src_unpack () {
 	default
-	#use doc && dodoc README.md docs/*.md
-
-	#if use eselect-ldso; then
-	#	dodir /usr/$(get_libdir)/blas/blis
-	#	insinto /usr/$(get_libdir)/blas/blis
-	#	doins lib/*/lib{c,}blas.so.3
-	#	dosym libblas.so.3 usr/$(get_libdir)/blas/blis/libblas.so
-	#	dosym libcblas.so.3 usr/$(get_libdir)/blas/blis/libcblas.so
-	#fi
+	ln -sr "${WORKDIR}" "${WORKDIR}/${P}" || die
 }
 
-pkg_postinst() {
-	true
-	#use eselect-ldso || return
+src_install () {
+	insinto  /usr/$(get_libdir)/
+	doins lib/*.so
 
-	#local libdir=$(get_libdir) me="blis"
-
-	## check blas
-	#eselect blas add ${libdir} "${EROOT}"/usr/${libdir}/blas/${me} ${me}
-	#local current_blas=$(eselect blas show ${libdir})
-	#if [[ ${current_blas} == blis || -z ${current_blas} ]]; then
-	#	eselect blas set ${libdir} ${me}
-	#	elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
-	#else
-	#	elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
-	#	elog "To use blas [${me}] implementation, you have to issue (as root):"
-	#	elog "\t eselect blas set ${libdir} ${me}"
-	#fi
+	if use eselect-ldso; then
+		dodir /usr/$(get_libdir)/blas/mkl-rt
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/blas/mkl-rt/libblas.so
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/blas/mkl-rt/libblas.so.3
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/blas/mkl-rt/libcblas.so
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/blas/mkl-rt/libcblas.so.3
+		dodir /usr/$(get_libdir)/lapack/mkl-rt
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/lapack/mkl-rt/liblapack.so
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/lapack/mkl-rt/liblapack.so.3
+	fi
 }
 
-pkg_postrm() {
-	true
-	#use eselect-ldso && eselect blas validate
+pkg_postinst () {
+	use eselect-ldso || return
+	local libdir=$(get_libdir) me="mkl-rt"
+
+	# check blas
+	eselect blas add ${libdir} "${EROOT}"/usr/${libdir}/blas/${me} ${me}
+	local current_blas=$(eselect blas show ${libdir})
+	if [[ ${current_blas} == mkl-rt || -z ${current_blas} ]]; then
+		eselect blas set ${libdir} ${me}
+		elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
+	else
+		elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
+		elog "To use blas [${me}] implementation, you have to issue (as root):"
+		elog "\t eselect blas set ${libdir} ${me}"
+	fi
+
+	# check lapack
+	eselect lapack add ${libdir} "${EROOT}"/usr/${libdir}/lapack/${me} ${me}
+	local current_lapack=$(eselect lapack show ${libdir})
+	if [[ ${current_lapack} == mkl-rt || -z ${current_lapack} ]]; then
+		eselect lapack set ${libdir} ${me}
+		elog "Current eselect: LAPACK ($libdir) -> [${current_blas}]."
+	else
+		elog "Current eselect: LAPACK ($libdir) -> [${current_blas}]."
+		elog "To use lapack [${me}] implementation, you have to issue (as root):"
+		elog "\t eselect lapack set ${libdir} ${me}"
+	fi
 }
 
+pkg_postrm () {
+	if use eselect-ldso; then
+		eselect blas validate
+		eselect lapack validate
+	fi
+}
