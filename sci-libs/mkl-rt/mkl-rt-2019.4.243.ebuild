@@ -8,7 +8,7 @@ DESCRIPTION="Intel Math Kernel Library (Runtime)"
 HOMEPAGE="https://software.intel.com/en-us/mkl"
 SRC_URI="https://repo.continuum.io/pkgs/main/linux-64/mkl-2019.4-243.tar.bz2 -> ${P}.tar.bz2"
 
-LICENSE="ISSL"
+LICENSE="ISSL" # https://software.intel.com/en-us/mkl/license-faq
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="eselect-ldso"
@@ -16,7 +16,7 @@ IUSE="eselect-ldso"
 # MKL uses Intel/LLVM OpenMP by default.
 # One can change the threadding layer to "gnu" or "tbb" through the MKL_THREADING_LAYER env var.
 RDEPEND="eselect-ldso? ( !app-eselect/eselect-cblas
-                         =app-eselect/eselect-blas-0.2 )
+                         >=app-eselect/eselect-blas-0.2 )
          sys-libs/libomp"
 DEPEND="${RDEPEND}"
 
@@ -51,8 +51,8 @@ pkg_postinst () {
 
 	# check blas
 	eselect blas add ${libdir} "${EROOT}"/usr/${libdir}/blas/${me} ${me}
-	local current_blas=$(eselect blas show ${libdir})
-	if [[ ${current_blas} == mkl-rt || -z ${current_blas} ]]; then
+	local current_blas=$(eselect blas show ${libdir} | cut -d' ' -f2)
+	if [[ ${current_blas} == "${me}" || -z ${current_blas} ]]; then
 		eselect blas set ${libdir} ${me}
 		elog "Current eselect: BLAS/CBLAS ($libdir) -> [${current_blas}]."
 	else
@@ -63,8 +63,8 @@ pkg_postinst () {
 
 	# check lapack
 	eselect lapack add ${libdir} "${EROOT}"/usr/${libdir}/lapack/${me} ${me}
-	local current_lapack=$(eselect lapack show ${libdir})
-	if [[ ${current_lapack} == mkl-rt || -z ${current_lapack} ]]; then
+	local current_lapack=$(eselect lapack show ${libdir} | cut -d' ' -f2)
+	if [[ ${current_lapack} == "${me}" || -z ${current_lapack} ]]; then
 		eselect lapack set ${libdir} ${me}
 		elog "Current eselect: LAPACK ($libdir) -> [${current_blas}]."
 	else
