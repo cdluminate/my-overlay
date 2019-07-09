@@ -35,6 +35,8 @@ src_install () {
 		dodir /usr/$(get_libdir)/lapack/mkl-rt
 		dosym ../../libmkl_rt.so usr/$(get_libdir)/lapack/mkl-rt/liblapack.so
 		dosym ../../libmkl_rt.so usr/$(get_libdir)/lapack/mkl-rt/liblapack.so.3
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/lapack/mkl-rt/liblapacke.so
+		dosym ../../libmkl_rt.so usr/$(get_libdir)/lapack/mkl-rt/liblapacke.so.3
 	fi
 }
 
