@@ -6,7 +6,6 @@ Table of Contents
 1. BLAS/LAPACK Runtime Switch: User Guide
 2. BLAS/LAPACK Runtime Switch: Developer Guide
 3. Implementation Details
-4. Pitfalls
 5. Frequently Asked Questions
 
 BLAS/LAPACK Runtime Switch: User Guide
@@ -98,6 +97,27 @@ Note the following combinations are discouraged:
 * blas=blis      lapack=openblas
 ```
 
+In case of package confliction (Block):
+
+```
+* Keep >=virtual/{blas,cblas,lapack}-3.8
+* Keep >=sci-libs/lapack-3.8 as it replaces all the
+  sci-lib/{blas,cblas,lapack,lapacke}-reference packages.
+* Keep >=app-eselect/eslect-{blas,lapack}-0.2
+```
+
+## Pitfalls
+
+1. Please don't use pthread and openmp at the same time since it may incur
+significant performance drop due to excessive thread creation. This may happen
+when some libraries linked against an application use OpenMP threading, whiles
+some other use pthread.
+
+2. Please don't use GNU OpenMP (`libgomp.so`) and (`libiomp.so`) at the same
+time as the symbol clash between them may lead to silent computation error.
+This may happen when MKL uses Intel/LLVM OpenMP while some other libraries
+linked against the same application use GNU OpenMP.
+
 BLAS/LAPACK Runtime Switch: Developer Guide
 ===========================================
 
@@ -173,15 +193,6 @@ directory, hinting `ld.so` on the places to find the BLAS/LAPACK libraries.
 As a side effect, this solution depends on the `ld.so.conf` support from the
 system C standard library. Besides, It's recommended to read the code if
 you need even more details.
-
-Pitfalls
-========
-
-1. Please don't use pthread and openmp at the same time since it may incur
-significant performance drop due to excessive thread creation.
-
-2. Please don't use GNU OpenMP (`libgomp.so`) and (`libiomp.so`) at the same
-time as the symbol clash between them may lead to silent computation error.
 
 Frequently Asked Questions
 ==========================
