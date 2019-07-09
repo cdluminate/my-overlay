@@ -74,6 +74,16 @@ manual page or the help messages.
 
 ## Side Notes
 
+List of BLAS/LAPACK providers (`eselect-ldso`):
+
+* `sci-libs/lapack`: the reference blas/cblas/lapack/lapacke, only supports
+  serial mode.
+* `sci-libs/blis`: optimized blas/cblas implementation.
+* `sci-libs/openblas`: optimized blas/cblas + partially optimized
+  lapack/lapacke.
+* `sci-libs/mkl-rt`: Intel's math kernel library. optimized
+  blas/cblas/lapack/lapcke/etc implementation.
+
 Here are some recommended combinations for your choice:
 
 ```
