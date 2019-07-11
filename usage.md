@@ -203,12 +203,13 @@ the "BLAS64" feature is not integrated into the mechanism. When the demand on
 "BLAS64" is common enough, we could provide another pair of eselect modules,
 i.e. `eselect-blas64` and `eselect-lapack64`.
 
-**Q:** How do I add Intel's MKL into this mechanism?
+**Q:** How do I add a customized implementation into this mechanism?
 
-A: Install MKL to `/path/to/mkl`, and symlink `/path/to/mkl/libmkl_rt.so` to
-`/path/to/mkl/lib{,c}blas.so{,.3}`. Then register it with `eselect blas add
-lib64 /path/to/mkl/ mkl`. Note that building programs when MKL is selected is
-discouraged. The reason could be found in the developer guide part.
+A: Taking MKL as an example. We first install MKL to `/path/to/mkl`, and
+symlink `/path/to/mkl/libmkl_rt.so` to `/path/to/mkl/lib{,c}blas.so{,.3}`.
+Then register it with `eselect blas add lib64 /path/to/mkl/ mkl`. Note that
+building programs when MKL is selected is discouraged. The reason could be
+found in the developer guide part.
 
 A real example about adding and setting Intel MKL as the backend library:
 ```
@@ -228,7 +229,8 @@ A real example about adding and setting Intel MKL as the backend library:
 
 To remove the MKL candidate or any other customized library, just remove the
 corresponding files under `/etc/env.d/blas/` and `/etc/env.d/lapack/`
-directories, then select some other candidates.
+directories, then select some other candidates. Note, the
+`sci-libs/mkl-rt::gentoo` can do all the above steps for you.
 
 Authors, Acknowledgement, Credits
 ==================================
