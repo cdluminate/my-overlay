@@ -101,13 +101,15 @@ Note the following combinations are discouraged:
 * blas=blis      lapack=openblas
 ```
 
-In case of package confliction (Block):
+In case of package confliction (Block) during transition:
 
 ```
 * Keep >=virtual/{blas,cblas,lapack}-3.8
 * Keep >=sci-libs/lapack-3.8 as it replaces all the
   sci-lib/{blas,cblas,lapack,lapacke}-reference packages.
-* Keep >=app-eselect/eslect-{blas,lapack}-0.2
+  The *-reference packages should be unmerged.
+* Keep >=app-eselect/eslect-{blas,lapack}-0.2 .
+  app-eselect/eselect-cblas-* has been deprecated.
 ```
 
 ## Pitfalls
