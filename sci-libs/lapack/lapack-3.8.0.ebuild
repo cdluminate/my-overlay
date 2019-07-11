@@ -40,9 +40,9 @@ src_configure() {
 		-DCMAKE_INSTALL_PREFIX="${EPREFIX}"/usr
 #		-DBUILD_STATIC_LIBS=$(usex static-libs)  # not a tunable. 
 		-DBUILD_SHARED_LIBS=ON
-		-DCMAKE_SKIP_RPATH=True
-		-DCMAKE_SKIP_BUILD_RPATH=True
-		-DCMAKE_SKIP_INSTALL_RPATH=True
+		-DCMAKE_SKIP_RPATH=ON
+		-DCMAKE_SKIP_BUILD_RPATH=ON
+		-DCMAKE_SKIP_INSTALL_RPATH=ON
 		-DCMAKE_Fortran_FLAGS="$($(tc-getPKG_CONFIG) --cflags blas) $(get_abi_CFLAGS) ${FCFLAGS}"
 	)
 	cmake-utils_src_configure
@@ -50,8 +50,9 @@ src_configure() {
 
 src_install () {
 	cmake-utils_src_install
-	for SO in $(find . -type f -name 'lib*.so*'); do
-		patchelf --remove-rpath $SO
+	# XXX: only by doing so can we really get rid of the RPATH
+	for SO in $(find "${D}/${EPREFIX}" -type f -name 'lib*.so*'); do
+		patchelf --remove-rpath "${SO}"
 	done
 
 	use eselect-ldso || return
