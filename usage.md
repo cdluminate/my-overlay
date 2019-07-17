@@ -259,3 +259,13 @@ This work is supported by Google through Google Summer of Code. [Project Link](h
 
 Thanks to Zongyu Zhang who [fixed a bug in numpy ebuild](https://github.com/gentoo/gentoo/commit/f5c71a4aa9615c8c14caa8e7076519ab2a4b9824#diff-e86a27d02ab70b6118a6b04d18ff075e)
 so that numpy could make use of the switching mechanism correctly.
+
+User Feedbacks
+==============
+
+Positive ones:
+
+https://github.com/gentoo/sci/issues/805#issuecomment-510469206
+https://github.com/gentoo/sci/issues/805#issuecomment-512097570
+
+Negative ones: None yet.
