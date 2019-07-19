@@ -71,10 +71,6 @@ re-compilation is required thanks to this mechanism. For more details
 about the `eselect blas` or `eselect-lapack` usage please look up the
 manual page or the help messages.
 
-## 64-Bit Indexing Variants of BLAS and LAPACK
-
-Work in progress.
-
 ## Side Notes
 
 List of BLAS/LAPACK providers (`eselect-ldso`):
@@ -93,6 +89,7 @@ Here are some recommended combinations for your choice:
 * blas=openblas  lapack=openblas   (priority: high)
 * blas=blis      lapack=reference  (priority: medium)
 * blas=reference lapack=reference  (priority: low)
+* blas=mkl-rt    lapack=mkl-rt     (priority: high but non-free)
 ```
 
 Note the following combinations are discouraged:
@@ -216,9 +213,11 @@ mechanism deal with such feature?
 
 A: The "BLAS64" or "BLAS-ILP64" ABI is different from the "BLAS32" or
 "BLAS-LP64" ABI. Mixing them together will lead to unpredictable results, hence
-the "BLAS64" feature is not integrated into the mechanism. When the demand on
-"BLAS64" is common enough, we could provide another pair of eselect modules,
-i.e. `eselect-blas64` and `eselect-lapack64`.
+the "BLAS64" feature is not integrated into the mechanism. Currently we only
+provide this feature in the `sci-libs/openblas` package for Julia's use.
+Besides, the generic switching mechanism for BLAS64/LAPACK64 is still being
+experimented in Debian. When the demand on "BLAS64" is common enough or the
+experiment in Debian was successful, we could start to provide it in Gentoo.
 
 **Q:** How do I add a customized implementation into this mechanism?
 
