@@ -10,7 +10,7 @@ SRC_URI="https://github.com/xianyi/OpenBLAS/tarball/v${PV} -> ${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
-IUSE="dynamic openmp pthread serial static-libs eselect-ldso"
+IUSE="dynamic openmp pthread serial static-libs eselect-ldso index-64bit"
 REQUIRED_USE="?? ( openmp pthread serial )"
 
 RDEPEND="
@@ -43,11 +43,17 @@ src_unpack () {
 	default
 	find "${WORKDIR}" -maxdepth 1 -type d -name \*OpenBLAS\* && \
 		mv "${WORKDIR}"/*OpenBLAS* "${S}" || die
+	if use index-64bit; then
+		cp -aL "${S}" "${S}-index-64bit"
+	fi
 }
 
 src_compile () {
 	emake $(openblas_flags)
 	emake -Cinterface shared-blas-lapack $(openblas_flags)
+	if use index-64bit; then
+		emake -C"${S}-index-64bit" $(openblas_flags) INTERFACE64=1 LIBPREFIX=libopenblas64
+	fi
 }
 
 src_install () {
@@ -65,6 +71,11 @@ src_install () {
 		insinto /usr/$(get_libdir)/lapack/openblas/
 		doins interface/liblapack.so.3
 		dosym liblapack.so.3 usr/$(get_libdir)/lapack/openblas/liblapack.so
+	fi
+
+	if use index-64bit; then
+		insinto /usr/$(get_libdir)/
+		doins "${S}-index-64bit"/libopenblas64*
 	fi
 }
 
