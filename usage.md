@@ -200,16 +200,16 @@ you need even more details.
 Frequently Asked Questions
 ==========================
 
-**Q:** I disabled this feature when installing a bunch of packages, but now I
-regret and want to enable the runtime switching feature. How should I do?
+**Q: I disabled this feature when installing a bunch of packages, but now I
+regret and want to enable the runtime switching feature. How should I do?**
 
 A: Simply reinstall the virtual packages and your favorate BLAS/LAPACK
 providers with the `eselect-ldso` flag toggled. The whole dependency tree
 doesn't need to be rebuilt as a rebuild is expected to make no difference.
 
-**Q:** Some BLAS/LAPACK implementations support 64-bit array indexing, which provides
+**Q: Some BLAS/LAPACK implementations support 64-bit array indexing, which provides
 functions such as `sasum(int64_t N, float* X, int64_t INCX)`. How does this
-mechanism deal with such feature?
+mechanism deal with such feature?**
 
 A: The "BLAS64" or "BLAS-ILP64" ABI is different from the "BLAS32" or
 "BLAS-LP64" ABI. Mixing them together will lead to unpredictable results, hence
@@ -219,7 +219,7 @@ Besides, the generic switching mechanism for BLAS64/LAPACK64 is still being
 experimented in Debian. When the demand on "BLAS64" is common enough or the
 experiment in Debian was successful, we could start to provide it in Gentoo.
 
-**Q:** How do I add a customized implementation into this mechanism?
+**Q: How do I add a customized implementation into this mechanism?**
 
 A: Taking MKL as an example. We first install MKL to `/path/to/mkl`, and
 symlink `/path/to/mkl/libmkl_rt.so` to `/path/to/mkl/lib{,c}blas.so{,.3}`.
@@ -248,6 +248,25 @@ corresponding files under `/etc/env.d/blas/` and `/etc/env.d/lapack/`
 directories, then select some other candidates. Note, the
 `sci-libs/mkl-rt::gentoo` can do all the above steps for you.
 
+Reference
+=========
+
+1. [gentoo-science] GSoC Proposal: Improvements to the BLAS / LAPACK and their reverse-dependencies
+   https://archives.gentoo.org/gentoo-science/message/4d0186acdce6df538a2740e0f1146ae6
+
+2. [gentoo-dev] RFC: BLAS and LAPACK runtime switching
+   https://archives.gentoo.org/gentoo-dev/message/d917547f7a9e1226fca63632a1e02026
+
+3. [gentoo-dev] [PATCH 0/2] RFC: Introducing ldso switching to BLAS/LAPACK
+   https://archives.gentoo.org/gentoo-dev/message/95beba3dc1c0f684ce1ec82d51988fc8
+
+4. [gentoo-science] On BLAS and LAPACK int64 ABI
+   https://archives.gentoo.org/gentoo-science/message/8e3b9567297de5a1809feb28c62be633
+
+5. hsntgm (Github user) wrote an "openblas" script for similar switching
+   purpose. However the implementation is neither generic nor simple enough.
+   See https://github.com/gentoo/gentoo/pull/11700/files
+
 Authors, Acknowledgement, Credits
 ==================================
 
@@ -264,7 +283,7 @@ User Feedbacks
 
 Positive ones:
 
-https://github.com/gentoo/sci/issues/805#issuecomment-510469206
-https://github.com/gentoo/sci/issues/805#issuecomment-512097570
+* https://github.com/gentoo/sci/issues/805#issuecomment-510469206
+* https://github.com/gentoo/sci/issues/805#issuecomment-512097570
 
 Negative ones: None yet.
